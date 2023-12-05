@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Kronshtadt.otf",
+      "sha1": "df8f5079c603d9162eeb60f49d9057ff7699139c"
+    },
+    {
+      "path": "src/assets/fonts/Noatun.otf",
+      "sha1": "454b57d3dc40c027310c218b432aef63c54c5eaf"
+    }
+  ]
+}

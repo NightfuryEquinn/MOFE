@@ -7,7 +7,7 @@ const App: React.FC = () => {
   
   return (
     <View style={ container }>
-      <Text style={ title }>Welcome</Text>
+      <Text style={ title }>Welcomes</Text>
       <Text style={ body }>Hello, React Native!</Text>
     </View>
   )

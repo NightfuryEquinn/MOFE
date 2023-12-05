@@ -11,7 +11,7 @@ export const AppStyles = StyleSheet.create({
     fontFamily: "Noatun"
   },
   body: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: "Kronshtadt"
   }
 })
