@@ -1,5 +1,6 @@
 {
   "name": "mofe",
+  "displayName": "M.O.F.E.",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,6 +13,7 @@
   "dependencies": {
     "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.20",
+    "@realm/react": "^0.6.2",
     "moment": "^2.29.4",
     "react": "18.2.0",
     "react-native": "0.72.7",
@@ -19,7 +21,8 @@
     "react-native-splash-screen": "^3.3.0",
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
-    "react-navigation-tabs": "^1.2.0"
+    "react-navigation-tabs": "^1.2.0",
+    "realm": "^12.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
