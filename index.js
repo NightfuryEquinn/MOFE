@@ -1,12 +1,12 @@
 import { AppRegistry } from 'react-native';
-import App from './src/assets/App';
 import { name as appName } from './app.json';
 import { RealmProvider } from '@realm/react';
+import Home from './src/Home';
 
 const AppRoot = () => (
   <RealmProvider>
-    <App />
+    <Home />
   </RealmProvider>
 )
 
-AppRegistry.registerComponent( appName, () => App );
+AppRegistry.registerComponent( appName, () => AppRoot );

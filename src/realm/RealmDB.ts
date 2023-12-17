@@ -1,10 +1,10 @@
 import Realm from "realm";
 import { TaskSchema } from "./models/TaskSchema";
 
-const realm = new Realm({
+const realmDb = new Realm({
   schema: [
     TaskSchema,
   ]
 })
 
-export default realm
+export default realmDb
