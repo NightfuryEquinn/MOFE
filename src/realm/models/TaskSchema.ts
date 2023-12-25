@@ -1,15 +1,5 @@
 import { v4 as uuid } from "uuid"
 
-interface Task {
-  id: string,
-  title: string,
-  description: string,
-  date: string,
-  startTime: string,
-  endTime: string,
-  isCompleted: boolean
-}
-
 const TaskSchema: Realm.ObjectSchema = {
   name: "Task",
   primaryKey: "_taskId",
@@ -24,5 +14,4 @@ const TaskSchema: Realm.ObjectSchema = {
   }
 }
 
-export type { Task }
 export { TaskSchema }
