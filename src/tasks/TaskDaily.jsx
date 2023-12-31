@@ -1,7 +1,7 @@
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import { AppStyles } from "../styles/AppStyles"
 
-const TaskDaily = () => {
+const TaskDaily = ( { navigation } ) => {
   const {
     taskContainer,
     taskDateContainer,
@@ -16,7 +16,7 @@ const TaskDaily = () => {
     <TouchableOpacity 
       activeOpacity={ 0.75 }
       onPress={ () => {
-
+        navigation.navigate( "TaskDailyDetail" )
       }}
       style={ taskContainer }
     >

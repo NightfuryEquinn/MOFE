@@ -1,51 +1,35 @@
-import { useEffect, useState } from "react"
-import { AppState, Image, ScrollView, Text, View } from "react-native"
-import realmDb from "../realm/RealmDB"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { Image, ScrollView, Text, View } from "react-native"
 import { AppStyles } from "../styles/AppStyles"
-import TaskDaily from "./TaskDaily"
+import { SafeAreaView } from "react-native-safe-area-context"
 import CTAButtonList from "../shared/CTAButtonList"
+import TaskDetail from "./TaskDetail"
 
-const TaskMain = ( { navigation } ) => {
-  const [ appState, setAppState ] = useState( AppState.currentState )
-  const [ tasks, setTasks ] = useState( [] )
-
-  const handleAppStateChange = ( nextAppState ) => {
-    if( appState.match( /inactive | background/ ) && nextAppState === 'active' ) {
-      const taskSchema = realmDb.objects( 'Task' )
-      const taskArray = taskSchema.map( ( task ) => ( { ...task } ) )
-
-      setTasks( taskArray )
-    }
-
-    setAppState( nextAppState )
-  }
-
-  useEffect( () => {
-    AppState.addEventListener( 'change', handleAppStateChange )
-
-    console.log( `All Tasks -- ${ tasks }` )
-  }, [] )
-
+const TaskDailyDetail = ( { navigation } ) => {
   const {
     container,
+    headerDividerAlt,
+    headerAlt,
     taskMainContainer,
     taskMainLeft,
-    taskMainRight,
     taskScroll,
-    bookmark,
-    bookmarkContainer
+    taskMainRight,
+    bookmarkContainer,
+    bookmark
   } = AppStyles
 
   return (
     <SafeAreaView style={ container }>
       <View style={ taskMainContainer }>
         <View style={ taskMainLeft }>
+          <View style={ headerDividerAlt }>
+            <Text style={ headerAlt }>30 11 2023</Text>
+          </View>
+
           <ScrollView
             style={ taskScroll }
             showsVerticalScrollIndicator={ false }
           >
-            <TaskDaily navigation={ navigation } />
+            <TaskDetail navigation={ navigation } />
           </ScrollView>
           
           <Image
@@ -77,4 +61,4 @@ const TaskMain = ( { navigation } ) => {
   )
 }
 
-export default TaskMain
+export default TaskDailyDetail

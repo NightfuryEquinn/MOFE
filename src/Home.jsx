@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react"
-import { View, Text, TouchableOpacity } from "react-native"
+import { View, Text, TouchableOpacity, Image } from "react-native"
 import { AppStyles } from "./styles/AppStyles"
 import SplashScreen from "react-native-splash-screen"
 import moment from "moment"
-import Animated from 'react-native-reanimated'
 import { SafeAreaView } from "react-native-safe-area-context"
 import { quotes } from "./assets/utils/Quotes"
 import { useIsFocused } from "@react-navigation/native"
@@ -42,7 +41,9 @@ const Home = ( { navigation } ) => {
     containerWrapper,
     headerDivider, 
     header,
-    imageButton,
+    topImageButton,
+    middleImageButton,
+    bottomImageButton,
     buttonWrapper,
     buttonWrapperAlt,
     buttonWrapperAltAlt,
@@ -61,12 +62,12 @@ const Home = ( { navigation } ) => {
 
         <TouchableOpacity
           activeOpacity={ 0.75 }
-          style={ imageButton }
+          style={ topImageButton }
           onPress={ () => {
-            navigation.navigate( 'TaskMain' )
+            navigation.navigate( 'TaskStack' )
           }}
         >
-          <Animated.Image
+          <Image
             source={ require( "./assets/images/town.jpg" ) }
             style={{ 
               width: 'fit-content', 
@@ -75,7 +76,6 @@ const Home = ( { navigation } ) => {
               borderTopLeftRadius: 20,
               borderBottomRightRadius: 20,
             }}
-            sharedTransitionTag="town"
           />
 
           <View style={ buttonWrapper }>
@@ -87,12 +87,12 @@ const Home = ( { navigation } ) => {
           <View style={ middleSection }>
             <TouchableOpacity
               activeOpacity={ 0.75 }
-              style={ imageButton }
+              style={ middleImageButton }
               onPress={ () => {
                 navigation.navigate( '' )
               }}
             >
-              <Animated.Image 
+              <Image 
                 source={ require( './assets/images/seaside.jpg' ) }
                 style={{
                   width: 'fit-content',
@@ -117,12 +117,12 @@ const Home = ( { navigation } ) => {
 
             <TouchableOpacity
               activeOpacity={ 0.75 }
-              style={ imageButton }
+              style={ middleImageButton }
               onPress={ () => {
                 navigation.navigate( '' )
               }}
             >
-              <Animated.Image 
+              <Image 
                 source={ require( './assets/images/cliff.jpg' ) }
                 style={{
                   width: 'fit-content',
@@ -143,12 +143,12 @@ const Home = ( { navigation } ) => {
 
         <TouchableOpacity
           activeOpacity={ 0.75 }
-          style={ imageButton }
+          style={ bottomImageButton }
           onPress={ () => {
             navigation.navigate( '' )
           }}
         >
-          <Animated.Image 
+          <Image 
             source={ require( './assets/images/volcano.jpg' ) }
             style={{
               width: 'fit-content', 

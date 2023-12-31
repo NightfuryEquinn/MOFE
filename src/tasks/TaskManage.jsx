@@ -1,53 +1,46 @@
-import { useEffect, useState } from "react"
-import { AppState, Image, ScrollView, Text, View } from "react-native"
-import realmDb from "../realm/RealmDB"
+import { Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableWithoutFeedback, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { AppStyles } from "../styles/AppStyles"
-import TaskDaily from "./TaskDaily"
 import CTAButtonList from "../shared/CTAButtonList"
 
-const TaskMain = ( { navigation } ) => {
-  const [ appState, setAppState ] = useState( AppState.currentState )
-  const [ tasks, setTasks ] = useState( [] )
-
-  const handleAppStateChange = ( nextAppState ) => {
-    if( appState.match( /inactive | background/ ) && nextAppState === 'active' ) {
-      const taskSchema = realmDb.objects( 'Task' )
-      const taskArray = taskSchema.map( ( task ) => ( { ...task } ) )
-
-      setTasks( taskArray )
-    }
-
-    setAppState( nextAppState )
-  }
-
-  useEffect( () => {
-    AppState.addEventListener( 'change', handleAppStateChange )
-
-    console.log( `All Tasks -- ${ tasks }` )
-  }, [] )
+const TaskManage = ( { route, navigation } ) => {
+  const { func } = route.params
 
   const {
     container,
     taskMainContainer,
     taskMainLeft,
     taskMainRight,
-    taskScroll,
+    headerDividerAlt,
+    headerAlt,
+    bookmarkContainer,
     bookmark,
-    bookmarkContainer
+    taskManageContainer,
+    taskInputContainer,
+    taskInputHeader,
+    taskInput
   } = AppStyles
 
   return (
     <SafeAreaView style={ container }>
       <View style={ taskMainContainer }>
         <View style={ taskMainLeft }>
-          <ScrollView
-            style={ taskScroll }
-            showsVerticalScrollIndicator={ false }
-          >
-            <TaskDaily navigation={ navigation } />
-          </ScrollView>
-          
+          <View style={ headerDividerAlt }>
+            <Text style={ headerAlt }>{ func === 'add' ? 'ADD TASK' : 'EDIT TASK' }</Text>
+          </View>
+
+          <KeyboardAvoidingView behavior="height" style={ taskManageContainer }>
+            <TouchableWithoutFeedback onPress={ Keyboard.dismiss }>
+              <View style={ taskInputContainer }>
+                <Text style={ taskInputHeader }>Title</Text>
+                <TextInput
+                  placeholder="your title"
+                  style={ taskInput }
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+
           <Image
             source={ require( "../assets/images/town.jpg" ) }
             style={{ 
@@ -70,11 +63,11 @@ const TaskMain = ( { navigation } ) => {
             <Text style={ bookmark }>K</Text>
           </View>
 
-          <CTAButtonList navigation={ navigation } />
+          <CTAButtonList navigation={ navigation } isAddEdit={ true } />
         </View>
       </View>
     </SafeAreaView>
   )
 }
 
-export default TaskMain
+export default TaskManage

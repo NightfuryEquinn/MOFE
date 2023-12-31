@@ -17,13 +17,30 @@ export const AppStyles = StyleSheet.create({
     padding: 10,
     backgroundColor: colors.white,
   },
+  headerDividerAlt: {
+    padding: 10,
+    backgroundColor: colors.deepblue,
+    borderBottomLeftRadius: 20
+  },
   header: {
     color: colors.deepblue,
     fontFamily: "Kronshtadt",
     fontSize: 20,
     textAlign: 'center'
   },
-  imageButton: {
+  headerAlt: {
+    color: colors.skyblue,
+    fontFamily: "Kronshtadt",
+    fontSize: 24,
+    textAlign: 'right'
+  },
+  topImageButton: {
+
+  },
+  middleImageButton: {
+
+  },
+  bottomImageButton: {
 
   },
   buttonWrapper: {
@@ -69,17 +86,19 @@ export const AppStyles = StyleSheet.create({
     fontSize: 16
   },
   taskMainContainer: {
+    flex: 1,
     flexDirection: 'row',
-    gap: 15
+    justifyContent: 'space-between'
   },
   taskMainLeft: {
-    width: 260,
+    width: 240,
     flexDirection: 'column',
     gap: 25
   },
   taskMainRight: {
+    position: 'relative',
     width: 50,
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   taskContainer: {
     marginBottom: 20,
@@ -120,14 +139,17 @@ export const AppStyles = StyleSheet.create({
     textAlign: 'right'
   },
   taskScroll: {
-    height: '77.5%'
+    flex: 1
   },
   bookmarkContainer: {
+    width: 'fit-content',
     paddingHorizontal: 7.5,
     paddingTop: 15,
-    paddingBottom: 5,
+    paddingBottom: 10,
     position: 'absolute',
     top: -20,
+    left: 0,
+    right: 0,
     backgroundColor: colors.white,
     alignItems: 'center',
     borderBottomLeftRadius: 10,
@@ -137,5 +159,90 @@ export const AppStyles = StyleSheet.create({
     fontFamily: 'Noatun',
     fontSize: 36,
     color: colors.deepblue,
+  },
+  ctaContainer: {
+    marginTop: 'auto',
+    flexDirection: 'column',
+    gap: 20,
+    alignItems: 'center'
+  },
+  ctaDetailContainer: {
+    marginTop: 'auto',
+    flexDirection: 'column',
+    gap: 10,
+    alignItems: 'center'
+  },
+  ctaButtonContainer: {
+    height: 40,
+    width: 40,
+    padding: 10,
+    backgroundColor: colors.white,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  ctaDetailButtonContainer: {
+    height: 32,
+    width: 32,
+    padding: 10,
+    backgroundColor: colors.deepblue,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  ctaButton: {
+    height: 20,
+    width: 20
+  },
+  ctaDetailButton: {
+    height: 20,
+    width: 20
+  },
+  taskDetailContainer: {
+    marginBottom: 20,
+    width: 'fit-content',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: colors.white,
+    borderBottomLeftRadius: 20,
+  },
+  taskDetailLeft: {
+    width: '80%'
+  },
+  taskDetailRight: {
+    width: '11.25%'
+  },
+  taskTitle: {
+    fontFamily: 'Kronshtadt',
+    fontSize: 18,
+    color: colors.deepblue,
+    paddingBottom: 5,
+    marginRight: 10,
+    borderBottomColor: colors.skyblue,
+    borderBottomWidth: 5
+  },
+  taskContentContainer: {
+    paddingTop: 10
+  },
+  taskDetail: {
+    fontFamily: 'Kronshtadt',
+    fontSize: 14,
+    color: colors.deepblue
+  },
+  taskManageContainer: {
+    flex: 1
+  },
+  taskInputContainer: {
+
+  },
+  taskInputHeader: {
+
+  },
+  taskInput: {
+    
   }
 })
