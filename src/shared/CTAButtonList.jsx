@@ -70,6 +70,7 @@ const CTAButtonList = ( { navigation, isAddEdit = false } ) => {
           onPress={ () => {
             navigation.navigate( "TaskManage", {
               func: 'add',
+              taskDetails: []
             })
           }}
           style={ ctaButtonContainer }

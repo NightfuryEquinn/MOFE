@@ -29,7 +29,7 @@ const TaskDailyDetail = ( { navigation } ) => {
             style={ taskScroll }
             showsVerticalScrollIndicator={ false }
           >
-            <TaskDetail navigation={ navigation } />
+            <TaskDetail navigation={ navigation } isCompleted={ false } />
           </ScrollView>
           
           <Image

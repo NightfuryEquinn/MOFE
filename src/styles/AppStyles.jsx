@@ -172,6 +172,13 @@ export const AppStyles = StyleSheet.create({
     gap: 10,
     alignItems: 'center'
   },
+  ctaDetailContainerCompleted: {
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    flexDirection: 'column',
+    gap: 10,
+    alignItems: 'center'
+  },
   ctaButtonContainer: {
     height: 40,
     width: 40,
@@ -192,6 +199,16 @@ export const AppStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  ctaDetailButtonContainerCompleted: {
+    height: 32,
+    width: 32,
+    padding: 10,
+    backgroundColor: colors.greyblue,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   ctaButton: {
     height: 20,
     width: 20
@@ -210,6 +227,16 @@ export const AppStyles = StyleSheet.create({
     backgroundColor: colors.white,
     borderBottomLeftRadius: 20,
   },
+  taskDetailContainerCompleted: {
+    marginBottom: 20,
+    width: 'fit-content',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: colors.deepblue,
+    borderBottomLeftRadius: 20,
+  },
   taskDetailLeft: {
     width: '80%'
   },
@@ -225,6 +252,12 @@ export const AppStyles = StyleSheet.create({
     borderBottomColor: colors.skyblue,
     borderBottomWidth: 5
   },
+  taskTitleCompleted: {
+    fontFamily: 'Kronshtadt',
+    fontSize: 18,
+    color: colors.white,
+    marginRight: 10,
+  },
   taskContentContainer: {
     paddingTop: 10
   },
@@ -234,15 +267,26 @@ export const AppStyles = StyleSheet.create({
     color: colors.deepblue
   },
   taskManageContainer: {
-    flex: 1
+    flex: 1,
+    gap: 10
   },
   taskInputContainer: {
-
+    gap: 2.5
   },
   taskInputHeader: {
-
+    fontFamily: 'Kronshtadt',
+    fontSize: 16,
+    color: colors.skyblue
   },
   taskInput: {
-    
-  }
+    paddingHorizontal: 10,
+    backgroundColor: colors.white,
+    color: colors.greyblue,
+    height: 40,
+    borderBottomLeftRadius: 10
+  },
+  taskDescInput: {
+    height: 80,
+    textAlign: 'auto'
+  },
 })
