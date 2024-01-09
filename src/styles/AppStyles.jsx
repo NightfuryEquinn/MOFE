@@ -2,6 +2,9 @@ import { StyleSheet } from "react-native";
 import { colors } from "../assets/colors/Colors";
 
 export const AppStyles = StyleSheet.create({
+  flexFull: {
+    flex: 1
+  },
   container: {
     flex: 1,
     padding: 20,
@@ -166,15 +169,15 @@ export const AppStyles = StyleSheet.create({
     gap: 20,
     alignItems: 'center'
   },
+  ctaDetailContainerWrapper: {
+    marginTop: 'auto',
+  },
+  ctaDetailContainerWrapperCompleted: {
+    marginTop: 'auto',
+    marginBottom: 'auto'
+  },
   ctaDetailContainer: {
     marginTop: 'auto',
-    flexDirection: 'column',
-    gap: 10,
-    alignItems: 'center'
-  },
-  ctaDetailContainerCompleted: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
     flexDirection: 'column',
     gap: 10,
     alignItems: 'center'
@@ -289,4 +292,40 @@ export const AppStyles = StyleSheet.create({
     height: 80,
     textAlign: 'auto'
   },
+  modalContainer: {
+    alignItems: 'center'
+  },
+  modalContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 15,
+    width: 300,
+    paddingTop: 10,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+    backgroundColor: colors.deepblue,
+    borderTopLeftRadius: 10,
+    borderBottomEndRadius: 10
+  },
+  modalText: {
+    fontFamily: 'Noatun',
+    fontSize: 44,
+    color: colors.skyblue
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    gap: 25
+  },
+  modalButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: colors.white,
+    borderTopLeftRadius: 10,
+    borderBottomEndRadius: 10
+  },
+  modalButtonText: {
+    fontFamily: 'Kronshtadt',
+    fontSize: 24,
+    color: colors.deepblue
+  }
 })

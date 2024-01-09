@@ -1,10 +1,10 @@
 import { Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { AppStyles } from "../styles/AppStyles"
-import CTAButtonList from "../shared/CTAButtonList"
+import { AppStyles } from "../../styles/AppStyles"
+import CTAButtonList from "../../shared/CTAButtonList"
 import { useState } from "react"
-import { colors } from "../assets/colors/Colors"
-import DateTimePicker from "@react-native-community/datetimepicker"
+import { colors } from "../../assets/colors/Colors"
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const TaskManage = ( { route, navigation } ) => {
   const { func, taskDetails } = route.params
@@ -13,13 +13,13 @@ const TaskManage = ( { route, navigation } ) => {
   const [ showStart, setShowStart ] = useState( false )
   const [ showEnd, setShowEnd ] = useState( false )
 
-  const [ taskTitle, setTaskTitle ] = useState( "" )
-  const [ taskDesc, setTaskDesc ] = useState( "" )
-  const [ taskDate, setTaskDate ] = useState( "" )
-  const [ taskStart, setTaskStart ] = useState( "" )
-  const [ taskEnd, setTaskEnd ] = useState( "" )
+  const [ taskTitle, setTaskTitle ] = useState( null )
+  const [ taskDesc, setTaskDesc ] = useState( null )
+  const [ taskDate, setTaskDate ] = useState( null )
+  const [ taskStart, setTaskStart ] = useState( null )
+  const [ taskEnd, setTaskEnd ] = useState( null )
 
-  const onChangeDate = ( _, selectedDate ) => {
+  const onChangeDate = ( selectedDate ) => {
     let tempDate = new Date( selectedDate )
     let fDate = tempDate.getFullYear() + 'Y ' + ( tempDate.getMonth() + 1 ) + 'M ' + tempDate.getDate() + 'D'
 
@@ -27,7 +27,7 @@ const TaskManage = ( { route, navigation } ) => {
     setShowDate( false )
   }
 
-  const onChangeStart = ( _, selectedDate ) => {
+  const onChangeStart = ( selectedDate ) => {
     let tempDate = new Date( selectedDate )
     let fTime = tempDate.getHours() + 'H ' + tempDate.getMinutes() + 'M'
 
@@ -35,7 +35,7 @@ const TaskManage = ( { route, navigation } ) => {
     setShowStart( false )
   }
 
-  const onChangeEnd = ( _, selectedDate ) => {
+  const onChangeEnd = ( selectedDate ) => {
     let tempDate = new Date( selectedDate )
     let fTime = tempDate.getHours() + 'H ' + tempDate.getMinutes() + 'M'
 
@@ -108,41 +108,49 @@ const TaskManage = ( { route, navigation } ) => {
                 </TouchableOpacity>
               </View>
 
-              <View style={ taskInputContainer }>
-                <Text style={ taskInputHeader }>Start Time</Text>
-                <TouchableOpacity 
-                  activeOpacity={ 0.75 }
-                  onPress={ () => setShowStart( true ) }
-                >
-                  <TextInput
-                    editable={ false }
-                    placeholder="your start time"
-                    placeholderTextColor={ colors.skyblue }
-                    style={ taskInput }
-                    value={ taskStart }
-                  />
-                </TouchableOpacity>
-              </View>
+              { taskDate ? 
+                <View style={ taskInputContainer }>
+                  <Text style={ taskInputHeader }>Start Time</Text>
+                  <TouchableOpacity 
+                    activeOpacity={ 0.75 }
+                    onPress={ () => setShowStart( true ) }
+                  >
+                    <TextInput
+                      editable={ false }
+                      placeholder="your start time"
+                      placeholderTextColor={ colors.skyblue }
+                      style={ taskInput }
+                      value={ taskStart }
+                    />
+                  </TouchableOpacity>
+                </View>
+                :
+                null
+              }
 
-              <View style={ taskInputContainer }>
-                <Text style={ taskInputHeader }>End Time</Text>
-                <TouchableOpacity 
-                  activeOpacity={ 0.75 }
-                  onPress={ () => setShowEnd( true ) }
-                >
-                  <TextInput
-                    editable={ false }
-                    placeholder="your end time"
-                    placeholderTextColor={ colors.skyblue }
-                    style={ taskInput }
-                    value={ taskEnd }
-                  />
-                </TouchableOpacity>
-              </View>
+              { taskDate && taskStart ?
+                <View style={ taskInputContainer }>
+                  <Text style={ taskInputHeader }>End Time</Text>
+                  <TouchableOpacity 
+                    activeOpacity={ 0.75 }
+                    onPress={ () => setShowEnd( true ) }
+                  >
+                    <TextInput
+                      editable={ false }
+                      placeholder="your end time"
+                      placeholderTextColor={ colors.skyblue }
+                      style={ taskInput }
+                      value={ taskEnd }
+                    />
+                  </TouchableOpacity>
+                </View>
+                :
+                null
+              }
             </KeyboardAvoidingView>
 
             <Image
-              source={ require( "../assets/images/town.jpg" ) }
+              source={ require( "../../assets/images/town.jpg" ) }
               style={{ 
                 width: 'fit-content', 
                 height: 120,
@@ -168,35 +176,32 @@ const TaskManage = ( { route, navigation } ) => {
         </View>
       </TouchableWithoutFeedback>
 
-      { showDate &&
-        <DateTimePicker 
-          value={ new Date() }
-          mode={ "date" }
-          is24Hour={ true }
-          display={ "calendar" }
-          onChange={ onChangeDate }
-        />
-      }
+      <DateTimePickerModal
+        isVisible={ showDate }
+        mode={ "date" }
+        is24Hour={ true }
+        display={ "calendar" }
+        onConfirm={ onChangeDate }
+        onCancel={ () => setShowDate( false ) }
+      />
+      
+      <DateTimePickerModal 
+        isVisible={ showStart }
+        mode={ "time" }
+        is24Hour={ true }
+        display={ "clock" }
+        onConfirm={ onChangeStart }
+        onCancel={ () => setShowStart( false ) }
+      />
 
-      { showStart &&
-        <DateTimePicker 
-          value={ new Date() }
-          mode={ "time" }
-          is24Hour={ true }
-          display={ "time" }
-          onChange={ onChangeStart }
-        />
-      }
-
-      { showEnd &&
-        <DateTimePicker 
-          value={ new Date() }
-          mode={ "time" }
-          is24Hour={ true }
-          display={ "time" }
-          onChange={ onChangeEnd }
-        />
-      }
+      <DateTimePickerModal 
+        isVisible={ showEnd }
+        mode={ "time" }
+        is24Hour={ true }
+        display={ "clock" }
+        onConfirm={ onChangeEnd }
+        onCancel={ () => setShowEnd( false ) }
+      />
     </SafeAreaView>
   )
 }

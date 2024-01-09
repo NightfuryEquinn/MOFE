@@ -1,7 +1,11 @@
 import { Image, Text, TouchableOpacity, View } from "react-native"
-import { AppStyles } from "../styles/AppStyles"
+import { AppStyles } from "../../styles/AppStyles"
+import { useState } from "react"
+import PopupModal from "../../shared/PopupModal"
 
 const TaskDaily = ( { navigation } ) => {
+  const [ showDeleteAllDialog, setShowDeleteAllDialog ] = useState( false )
+
   const {
     taskContainer,
     taskDateContainer,
@@ -20,6 +24,12 @@ const TaskDaily = ( { navigation } ) => {
       }}
       style={ taskContainer }
     >
+      <PopupModal
+        showDialog={ showDeleteAllDialog }
+        setShowDialog={ setShowDeleteAllDialog }
+        modalTitle={ "DELETE ALL?" }
+      />
+
       <View style={ taskDateContainer }>
         <Text style={ taskDate }>25 12 2023</Text>
       </View>
@@ -28,11 +38,11 @@ const TaskDaily = ( { navigation } ) => {
         <TouchableOpacity
           activeOpacity={ 0.75 }
           onPress={ () => {
-
+            setShowDeleteAllDialog( true )
           }}
         >
           <Image
-            source={ require( "../assets/icons/more.png" ) }
+            source={ require( "../../assets/icons/more.png" ) }
             style={ taskMore }
           />
         </TouchableOpacity>

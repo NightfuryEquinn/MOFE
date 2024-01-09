@@ -89,7 +89,7 @@ const Home = ( { navigation } ) => {
               activeOpacity={ 0.75 }
               style={ middleImageButton }
               onPress={ () => {
-                navigation.navigate( '' )
+                navigation.navigate( 'LogStack' )
               }}
             >
               <Image 
@@ -101,7 +101,6 @@ const Home = ( { navigation } ) => {
                   borderTopLeftRadius: 20,
                   borderBottomRightRadius: 20
                 }}
-                sharedTransitionTag=""
               />
 
               <View style={ buttonWrapper }>
@@ -131,7 +130,6 @@ const Home = ( { navigation } ) => {
                   borderTopRightRadius: 20,
                   borderBottomLeftRadius: 20
                 }}
-                sharedTransitionTag=""
               />
 
               <View style={ buttonWrapperAlt }>
@@ -157,7 +155,6 @@ const Home = ( { navigation } ) => {
               borderTopRightRadius: 20,
               borderBottomLeftRadius: 20
             }}
-            sharedTransitionTag=""
           />
 
           <View style={ buttonWrapperAltAlt }>

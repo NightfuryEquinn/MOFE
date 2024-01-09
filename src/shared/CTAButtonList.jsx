@@ -1,7 +1,15 @@
 import { View, TouchableOpacity, Image } from "react-native"
 import { AppStyles } from "../styles/AppStyles"
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useState } from "react";
 
 const CTAButtonList = ( { navigation, isAddEdit = false } ) => {
+  const [ calendar, setCalendar ] = useState( false )
+
+  const onFilterDate = ( selectedDate ) => {
+    console.log( selectedDate )
+  }
+
   const {
     ctaContainer,
     ctaButtonContainer,
@@ -50,7 +58,7 @@ const CTAButtonList = ( { navigation, isAddEdit = false } ) => {
         <TouchableOpacity
           activeOpacity={ 0.75 }
           onPress={ () => {
-            
+            setCalendar( true )
           }}
           style={ ctaButtonContainer }
         >
@@ -98,6 +106,15 @@ const CTAButtonList = ( { navigation, isAddEdit = false } ) => {
           style={ ctaButton }
         />
       </TouchableOpacity>
+
+      <DateTimePickerModal 
+        isVisible={ calendar }
+        mode={ "date" }
+        is24Hour={ true }
+        display={ 'calendar' }
+        onConfirm={ onFilterDate }
+        onCancel={ () => setCalendar( false ) }
+      />
     </View>
   )
 }

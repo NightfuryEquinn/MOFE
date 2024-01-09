@@ -1,6 +1,6 @@
 import { Text, View } from "react-native"
-import { AppStyles } from "../styles/AppStyles"
-import CTADetailButtonList from "../shared/CTADetailButtonList"
+import { AppStyles } from "../../styles/AppStyles"
+import CTADetailButtonList from "../../shared/CTADetailButtonList"
 
 const TaskDetail = ( { navigation, isCompleted } ) => {
   const {

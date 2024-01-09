@@ -1,7 +1,7 @@
 import { Image, ScrollView, Text, View } from "react-native"
-import { AppStyles } from "../styles/AppStyles"
+import { AppStyles } from "../../styles/AppStyles"
 import { SafeAreaView } from "react-native-safe-area-context"
-import CTAButtonList from "../shared/CTAButtonList"
+import CTAButtonList from "../../shared/CTAButtonList"
 import TaskDetail from "./TaskDetail"
 
 const TaskDailyDetail = ( { navigation } ) => {
@@ -33,7 +33,7 @@ const TaskDailyDetail = ( { navigation } ) => {
           </ScrollView>
           
           <Image
-            source={ require( "../assets/images/town.jpg" ) }
+            source={ require( "../../assets/images/town.jpg" ) }
             style={{ 
               width: 'fit-content', 
               height: 120,
