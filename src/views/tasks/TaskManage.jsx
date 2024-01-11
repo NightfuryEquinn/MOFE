@@ -7,7 +7,7 @@ import { colors } from "../../assets/colors/Colors"
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const TaskManage = ( { route, navigation } ) => {
-  const { func, taskDetails } = route.params
+  const { func, details } = route.params
 
   const [ showDate, setShowDate ] = useState( false )
   const [ showStart, setShowStart ] = useState( false )
@@ -84,6 +84,7 @@ const TaskManage = ( { route, navigation } ) => {
                 <Text style={ taskInputHeader }>Description</Text>
                 <TextInput
                   multiline
+                  textAlignVertical="top"
                   placeholder="your description"
                   placeholderTextColor={ colors.skyblue }
                   style={ [ taskInput, taskDescInput ] }

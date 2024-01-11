@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { AppState, Image, ScrollView, Text, View } from "react-native"
 import realmDb from "../../realm/RealmDB"
 import CTAButtonList from "../../shared/CTAButtonList"
+import LogDaily from "./LogDaily"
 
 const LogMain = ( { navigation } ) => {
   const [ appState, setAppState ] = useState( AppState.currentState )
@@ -32,6 +33,8 @@ const LogMain = ( { navigation } ) => {
     logMainLeft,
     logMainRight,
     logScroll,
+    logMonth,
+    logDailyContainer,
     bookmarkContainer,
     bookmark
   } = AppStyles
@@ -44,7 +47,16 @@ const LogMain = ( { navigation } ) => {
             style={ logScroll }
             showsVerticalScrollIndicator={ false }
           >
-
+            <View>
+              <Text style={ logMonth }>NOVEMBER 2023</Text>
+              <View style={ logDailyContainer }>
+                <LogDaily navigation={ navigation } isCompleted={ false } />
+                <LogDaily navigation={ navigation } isCompleted={ false } />
+                <LogDaily navigation={ navigation } isCompleted={ false } />
+                <LogDaily navigation={ navigation } isCompleted={ true } />
+                <LogDaily navigation={ navigation } isCompleted={ true } />
+              </View>
+            </View>
           </ScrollView>
 
           <Image
@@ -68,7 +80,7 @@ const LogMain = ( { navigation } ) => {
             <Text style={ bookmark }>S</Text>
           </View>
 
-          <CTAButtonList navigation={ navigation } />
+          <CTAButtonList navigation={ navigation } manageViewName={ "LogManage" } />
         </View>
       </View>
     </SafeAreaView>

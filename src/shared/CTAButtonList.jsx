@@ -2,12 +2,14 @@ import { View, TouchableOpacity, Image } from "react-native"
 import { AppStyles } from "../styles/AppStyles"
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useState } from "react";
+import moment from "moment";
 
-const CTAButtonList = ( { navigation, isAddEdit = false } ) => {
+const CTAButtonList = ( { navigation, isAddEdit = false, manageViewName } ) => {
   const [ calendar, setCalendar ] = useState( false )
 
   const onFilterDate = ( selectedDate ) => {
-    console.log( selectedDate )
+    setCalendar( false )
+    console.log( moment( selectedDate ).format( "D MM YYYY" ) )
   }
 
   const {
@@ -76,9 +78,9 @@ const CTAButtonList = ( { navigation, isAddEdit = false } ) => {
         <TouchableOpacity
           activeOpacity={ 0.75 }
           onPress={ () => {
-            navigation.navigate( "TaskManage", {
+            navigation.navigate( manageViewName, {
               func: 'add',
-              taskDetails: []
+              details: []
             })
           }}
           style={ ctaButtonContainer }

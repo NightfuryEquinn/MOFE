@@ -93,7 +93,17 @@ export const AppStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  logMainContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   taskMainLeft: {
+    width: 240,
+    flexDirection: 'column',
+    gap: 25
+  },
+  logMainLeft: {
     width: 240,
     flexDirection: 'column',
     gap: 25
@@ -102,6 +112,42 @@ export const AppStyles = StyleSheet.create({
     position: 'relative',
     width: 50,
     flexDirection: 'column',
+  },
+  logMainRight: {
+    position: 'relative',
+    width: 50,
+    flexDirection: 'column',
+  },
+  logDailyContainer: {
+    marginBottom: 25,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    rowGap: 15
+  },
+  logDailyButtonContainer: {
+    backgroundColor: colors.deepblue,
+    padding: 5,
+    paddingLeft: 15,
+    borderBottomLeftRadius: 10,
+  },
+  logDailyButtonContainerCompleted: {
+    backgroundColor: colors.skyblue,
+    padding: 5,
+    paddingLeft: 15,
+    borderBottomLeftRadius: 10,
+  },
+  logDailyButton: {
+    width: 87.5,
+    color: colors.skyblue,
+    fontFamily: 'Kronshtadt',
+    fontSize: 16
+  },
+  logDailyButtonCompleted: {
+    width: 87.5,
+    color: colors.deepblue,
+    fontFamily: 'Kronshtadt',
+    fontSize: 16
   },
   taskContainer: {
     marginBottom: 20,
@@ -143,6 +189,19 @@ export const AppStyles = StyleSheet.create({
   },
   taskScroll: {
     flex: 1
+  },
+  logScroll: {
+    flex: 1,
+  }, 
+  logMonth: {
+    marginBottom: 15,
+    color: colors.deepblue,
+    backgroundColor: colors.white,
+    padding: 10,
+    paddingRight: 15,
+    fontFamily: 'Kronshtadt',
+    fontSize: 20,
+    textAlign: 'right'
   },
   bookmarkContainer: {
     width: 'fit-content',
@@ -290,7 +349,6 @@ export const AppStyles = StyleSheet.create({
   },
   taskDescInput: {
     height: 80,
-    textAlign: 'auto'
   },
   modalContainer: {
     alignItems: 'center'
@@ -327,5 +385,25 @@ export const AppStyles = StyleSheet.create({
     fontFamily: 'Kronshtadt',
     fontSize: 24,
     color: colors.deepblue
-  }
+  },
+  logManageHeader: {
+    backgroundColor: colors.white,
+    padding: 10,
+    paddingRight: 15,
+  },
+  logManageTitle: {
+    fontFamily: 'Kronshtadt',
+    fontSize: 20,
+    color: colors.deepblue,
+    textAlign: 'right'
+  },
+  logContentContainer: {
+    flex: 1,
+    marginBottom: 20,
+  },
+  logTextarea: {
+    padding: 15,
+    height: 300,
+    backgroundColor: colors.deepblue,
+  },
 })

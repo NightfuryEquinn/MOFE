@@ -3,7 +3,7 @@ import { AppStyles } from "../styles/AppStyles"
 import PopupModal from "./PopupModal"
 import { useState } from "react"
 
-const CTADetailButtonList = ( { navigation, isCompleted } ) => {
+const CTADetailButtonList = ( { navigation, isCompleted, manageViewName } ) => {
   const [ showDeleteDialog, setShowDeleteDialog ] = useState( false )
 
   const {
@@ -42,9 +42,9 @@ const CTADetailButtonList = ( { navigation, isCompleted } ) => {
           <TouchableOpacity
             activeOpacity={ 0.75 }
             onPress={ () => {
-              navigation.navigate( "TaskManage", {
+              navigation.navigate( manageViewName, {
                 func: 'edit',
-                taskDetails: []
+                details: []
               })
             }}
             style={ ctaDetailButtonContainer }

@@ -70,7 +70,7 @@ const TaskMain = ( { navigation } ) => {
             <Text style={ bookmark }>K</Text>
           </View>
 
-          <CTAButtonList navigation={ navigation } />
+          <CTAButtonList navigation={ navigation } manageViewName={ "TaskManage" } />
         </View>
       </View>
     </SafeAreaView>

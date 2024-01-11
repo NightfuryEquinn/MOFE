@@ -42,7 +42,7 @@ const TaskDetail = ( { navigation, isCompleted } ) => {
       </View>
 
       <View style={ taskDetailRight }>
-        <CTADetailButtonList navigation={ navigation } isCompleted={ isCompleted } />
+        <CTADetailButtonList navigation={ navigation } isCompleted={ isCompleted } manageViewName={ "TaskManage" } />
       </View>
     </View>
   )

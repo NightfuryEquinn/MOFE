@@ -7,6 +7,8 @@ import TaskManage from "./views/tasks/TaskManage"
 import { AppStyles } from "./styles/AppStyles"
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import LogMain from "./views/logs/LogMain"
+import LogManage from "./views/logs/LogManage"
+import NoteMain from "./views/notes/NoteMain"
 
 const Stack = createNativeStackNavigator()
 
@@ -26,7 +28,7 @@ const App = () => {
               headerShown: false, 
               gestureEnabled: true,
               gestureDirection: 'horizontal',
-              animation: 'slide_from_bottom',
+              animation: 'fade',
               animationDuration: 750
             }} 
           />
@@ -48,7 +50,18 @@ const App = () => {
               headerShown: false, 
               gestureEnabled: true,
               gestureDirection: 'horizontal',
-              animation: 'slide_from_bottom',
+              animation: 'slide_from_left',
+              animationDuration: 750
+            }} 
+          />
+          <Stack.Screen 
+            name="NoteStack"
+            component={ NoteStack } 
+            options={{ 
+              headerShown: false, 
+              gestureEnabled: true,
+              gestureDirection: 'horizontal',
+              animation: 'slide_from_right',
               animationDuration: 750
             }} 
           />
@@ -108,7 +121,36 @@ const LogStack = () => {
           headerShown: false,
           gestureEnabled: true,
           gestureDirection: 'horizontal',
-          animation: 'slide_from_bottom',
+          animation: 'slide_from_left',
+          animationDuration: 750
+        }} 
+      />
+      <Stack.Screen 
+        name="LogManage" 
+        component={ LogManage } 
+        options={{ 
+          headerShown: false,
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          animation: 'slide_from_left',
+          animationDuration: 750
+        }} 
+      />
+    </Stack.Navigator>
+  )
+}
+
+const NoteStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="NoteMain">
+      <Stack.Screen 
+        name="NoteMain" 
+        component={ NoteMain } 
+        options={{ 
+          headerShown: false,
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          animation: 'slide_from_right',
           animationDuration: 750
         }} 
       />
