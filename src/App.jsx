@@ -9,6 +9,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import LogMain from "./views/logs/LogMain"
 import LogManage from "./views/logs/LogManage"
 import NoteMain from "./views/notes/NoteMain"
+import NoteDailyDetail from "./views/notes/NoteDailyDetail"
+import NoteManage from "./views/notes/NoteManage"
+import FuryMain from "./views/fury/FuryMain"
 
 const Stack = createNativeStackNavigator()
 
@@ -28,7 +31,7 @@ const App = () => {
               headerShown: false, 
               gestureEnabled: true,
               gestureDirection: 'horizontal',
-              animation: 'fade',
+              animation: 'fade_from_bottom',
               animationDuration: 750
             }} 
           />
@@ -62,6 +65,17 @@ const App = () => {
               gestureEnabled: true,
               gestureDirection: 'horizontal',
               animation: 'slide_from_right',
+              animationDuration: 750
+            }} 
+          />
+          <Stack.Screen 
+            name="FuryStack"
+            component={ FuryStack } 
+            options={{ 
+              headerShown: false, 
+              gestureEnabled: true,
+              gestureDirection: 'horizontal',
+              animation: 'slide_from_bottom',
               animationDuration: 750
             }} 
           />
@@ -151,6 +165,46 @@ const NoteStack = () => {
           gestureEnabled: true,
           gestureDirection: 'horizontal',
           animation: 'slide_from_right',
+          animationDuration: 750
+        }} 
+      />
+      <Stack.Screen 
+        name="NoteDailyDetail" 
+        component={ NoteDailyDetail } 
+        options={{ 
+          headerShown: false,
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          animation: 'slide_from_right',
+          animationDuration: 750
+        }} 
+      />
+      <Stack.Screen 
+        name="NoteManage" 
+        component={ NoteManage } 
+        options={{ 
+          headerShown: false,
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          animation: 'slide_from_right',
+          animationDuration: 750
+        }} 
+      />
+    </Stack.Navigator>
+  )
+}
+
+const FuryStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="FuryMain">
+      <Stack.Screen 
+        name="FuryMain" 
+        component={ FuryMain } 
+        options={{ 
+          headerShown: false,
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          animation: 'slide_from_bottom',
           animationDuration: 750
         }} 
       />

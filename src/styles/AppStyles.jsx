@@ -98,15 +98,25 @@ export const AppStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  noteMainContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   taskMainLeft: {
     width: 240,
     flexDirection: 'column',
-    gap: 25
+    gap: 15
   },
   logMainLeft: {
     width: 240,
     flexDirection: 'column',
-    gap: 25
+    gap: 15
+  },
+  noteMainLeft: {
+    width: 240,
+    flexDirection: 'column',
+    gap: 15
   },
   taskMainRight: {
     position: 'relative',
@@ -114,6 +124,11 @@ export const AppStyles = StyleSheet.create({
     flexDirection: 'column',
   },
   logMainRight: {
+    position: 'relative',
+    width: 50,
+    flexDirection: 'column',
+  },
+  noteMainRight: {
     position: 'relative',
     width: 50,
     flexDirection: 'column',
@@ -158,7 +173,22 @@ export const AppStyles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     gap: 15
   },
+  noteContainer: {
+    marginBottom: 20,
+    padding: 10,
+    backgroundColor: colors.white,
+    borderRightWidth: 10,
+    borderRightColor: colors.deepblue,
+    borderBottomLeftRadius: 20,
+    gap: 15
+  },
   taskDateContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 7.5,
+    backgroundColor: colors.deepblue,
+    borderBottomLeftRadius: 10
+  },
+  noteDateContainer: {
     paddingHorizontal: 10,
     paddingVertical: 7.5,
     backgroundColor: colors.deepblue,
@@ -169,7 +199,17 @@ export const AppStyles = StyleSheet.create({
     fontFamily: 'Kronshtadt',
     fontSize: 16
   },
+  noteDate: {
+    color: colors.skyblue,
+    fontFamily: 'Kronshtadt',
+    fontSize: 16
+  },
   taskPreviewContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  notePreviewContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -178,10 +218,23 @@ export const AppStyles = StyleSheet.create({
     width: 28,
     height: 28,
   },
+  noteMore: {
+    width: 28,
+    height: 28,
+  },
   taskPreview: {
     gap: 5
   },
+  notePreview: {
+    gap: 5
+  },
   taskPreviewLabel: {
+    color: colors.deepblue,
+    fontFamily: 'Kronshtadt',
+    fontSize: 14,
+    textAlign: 'right'
+  },
+  notePreviewLabel: {
     color: colors.deepblue,
     fontFamily: 'Kronshtadt',
     fontSize: 14,
@@ -193,6 +246,9 @@ export const AppStyles = StyleSheet.create({
   logScroll: {
     flex: 1,
   }, 
+  noteScroll: {
+    flex: 1
+  },  
   logMonth: {
     marginBottom: 15,
     color: colors.deepblue,
@@ -283,7 +339,17 @@ export const AppStyles = StyleSheet.create({
     marginBottom: 20,
     width: 'fit-content',
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingRight: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: colors.white,
+    borderBottomLeftRadius: 20,
+  },
+  noteDetailContainer: {
+    marginBottom: 20,
+    width: 'fit-content',
+    paddingVertical: 10,
+    paddingRight: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: colors.white,
@@ -293,7 +359,17 @@ export const AppStyles = StyleSheet.create({
     marginBottom: 20,
     width: 'fit-content',
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingRight: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: colors.deepblue,
+    borderBottomLeftRadius: 20,
+  },
+  noteDetailContainerCompleted: {
+    marginBottom: 20,
+    width: 'fit-content',
+    paddingVertical: 10,
+    paddingRight: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: colors.deepblue,
@@ -305,16 +381,41 @@ export const AppStyles = StyleSheet.create({
   taskDetailRight: {
     width: '11.25%'
   },
+  noteDetailLeft: {
+    width: '80%'
+  },
+  noteDetailRight: {
+    width: '11.25%'
+  },
   taskTitle: {
     fontFamily: 'Kronshtadt',
     fontSize: 18,
     color: colors.deepblue,
     paddingBottom: 5,
+    paddingLeft: 15,
     marginRight: 10,
     borderBottomColor: colors.skyblue,
     borderBottomWidth: 5
   },
   taskTitleCompleted: {
+    paddingLeft: 15,
+    fontFamily: 'Kronshtadt',
+    fontSize: 18,
+    color: colors.white,
+    marginRight: 10,
+  },
+  noteTitle: {
+    fontFamily: 'Kronshtadt',
+    fontSize: 18,
+    color: colors.deepblue,
+    paddingBottom: 5,
+    paddingLeft: 15,
+    marginRight: 10,
+    borderBottomColor: colors.skyblue,
+    borderBottomWidth: 5
+  },
+  noteTitleCompleted: {
+    paddingLeft: 15,
     fontFamily: 'Kronshtadt',
     fontSize: 18,
     color: colors.white,
@@ -324,6 +425,16 @@ export const AppStyles = StyleSheet.create({
     paddingTop: 10
   },
   taskDetail: {
+    paddingLeft: 15,
+    fontFamily: 'Kronshtadt',
+    fontSize: 14,
+    color: colors.deepblue
+  },
+  noteContentContainer: {
+    paddingTop: 10
+  },
+  noteDetail: {
+    paddingLeft: 15,
     fontFamily: 'Kronshtadt',
     fontSize: 14,
     color: colors.deepblue
@@ -349,6 +460,28 @@ export const AppStyles = StyleSheet.create({
   },
   taskDescInput: {
     height: 80,
+  },
+  noteManageContainer: {
+    flex: 1,
+    gap: 10
+  },
+  noteInputContainer: {
+    gap: 2.5
+  },
+  noteInputHeader: {
+    fontFamily: 'Kronshtadt',
+    fontSize: 16,
+    color: colors.skyblue
+  },
+  noteInput: {
+    paddingHorizontal: 10,
+    backgroundColor: colors.white,
+    color: colors.greyblue,
+    height: 40,
+    borderBottomLeftRadius: 10
+  },
+  noteDescInput: {
+    height: 70,
   },
   modalContainer: {
     alignItems: 'center'

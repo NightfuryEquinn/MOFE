@@ -1,51 +1,35 @@
-import { useEffect, useState } from "react"
-import { AppState, Image, ScrollView, Text, View } from "react-native"
-import realmDb from "../../realm/RealmDB"
+import { Image, ScrollView, Text, View } from "react-native"
 import { AppStyles } from "../../styles/AppStyles"
 import { SafeAreaView } from "react-native-safe-area-context"
+import NoteDetail from "./NoteDetail"
 import CTAButtonList from "../../shared/CTAButtonList"
-import NoteDaily from "./NoteDaily"
 
-const NoteMain = ( { navigation } ) => {
-  const [ appState, setAppState ] = useState( AppState.currentState )
-  const [ notes, setNotes ] = useState( [] )
-
-  const handleAppStateChange = ( nextAppState ) => {
-    if( appState.match( /inactive | background/ ) && nextAppState === 'active' ) {
-      const noteSchema = realmDb.objects( 'Note' )
-      const noteArray = noteSchema.map( note => ( { ...note } ) )
-
-      setTasks( noteArray )
-    }
-
-    setAppState( nextAppState )
-  }
-
-  useEffect( () => {
-    AppState.addEventListener( 'change', handleAppStateChange )
-
-    console.log( `All Notes -- ${ notes }` )
-  }, [] )
-
+const NoteDailyDetail = ( { navigation } ) => {
   const {
     container,
     noteMainContainer,
     noteMainLeft,
     noteMainRight,
+    headerDividerAlt,
+    headerAlt,
     noteScroll,
     bookmarkContainer,
     bookmark
   } = AppStyles
-
+  
   return (
     <SafeAreaView style={ container }>
       <View style={ noteMainContainer }>
         <View style={ noteMainLeft }>
-          <ScrollView 
+          <View style={ headerDividerAlt }>
+            <Text style={ headerAlt }>12 2023</Text>
+          </View>
+
+          <ScrollView
             style={ noteScroll }
             showsVerticalScrollIndicator={ false }
           >
-            <NoteDaily navigation={ navigation } />
+            <NoteDetail navigation={ navigation } isCompleted={ false } />
           </ScrollView>
 
           <Image
@@ -77,5 +61,4 @@ const NoteMain = ( { navigation } ) => {
   )
 }
 
-export default NoteMain
- 
+export default NoteDailyDetail
