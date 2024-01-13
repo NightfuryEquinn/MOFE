@@ -539,4 +539,47 @@ export const AppStyles = StyleSheet.create({
     height: 300,
     backgroundColor: colors.deepblue,
   },
+  furyContainer: {
+    flexDirection: 'column',
+    gap: 15,
+    flex: 1
+  },
+  furyHeader: {
+    flexDirection: 'row',
+    gap: 25,
+    alignItems: 'center'
+  },
+  furyTitle: {
+    flex: 1,
+    padding: 10,
+    color: colors.skyblue,
+    backgroundColor: colors.deepblue,
+    borderBottomLeftRadius: 15,
+    fontFamily: 'Kronshtadt',
+    fontSize: 20
+  },
+  furyContentContainer: {
+    flex: 1,
+    gap: 5
+  },
+  furyTapText: {
+    color: colors.white,
+    fontFamily: 'Kronshtadt',
+    fontSize: 16,
+    textAlign: 'center'
+  },
+  furyTapTextMinor: {
+    color: colors.white,
+    fontFamily: 'Kronshtadt',
+    fontSize: 12,
+    textAlign: 'center'
+  },
+  furyArea: {
+    padding: 10,
+    flex: 1
+  },
+  dogeSticker: {
+    height: 125,
+    width: 125,
+  }
 })
