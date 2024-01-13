@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "650423136640",
+    "project_id": "mofe-8a718",
+    "storage_bucket": "mofe-8a718.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650423136640:android:874a6ffc79fd9e4f28d165",
+        "android_client_info": {
+          "package_name": "com.mofe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj_g_LhWfY6vX1aYD9plKVW1DjCo4Wc7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

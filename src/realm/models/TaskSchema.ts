@@ -1,10 +1,10 @@
-import { v4 as uuid } from "uuid"
+import uuid from 'react-native-uuid';
 
 const TaskSchema: Realm.ObjectSchema = {
   name: "Task",
   primaryKey: "_taskId",
   properties: {
-    _taskId: { type: 'uuid', indexed: true, default: uuid },
+    _taskId: { type: 'string', indexed: true, default: uuid.v4() },
     title: { type: 'string', default: null },
     description: { type: 'string', default: null },
     date: { type: 'string', default: null },

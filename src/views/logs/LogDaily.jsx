@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity } from "react-native"
 import { AppStyles } from "../../styles/AppStyles"
 
-const LogDaily = ( { navigation, isCompleted } ) => {
+const LogDaily = ( { log, navigation, isCompleted } ) => {
   const {
     logDailyButtonContainer,
     logDailyButtonContainerCompleted,
@@ -15,12 +15,12 @@ const LogDaily = ( { navigation, isCompleted } ) => {
       onPress={ () => {
         navigation.navigate( 'LogManage', {
           func: 'edit',
-          details: []
+          details: [ log._logId, log.description, log.date ]
         })
       }}
       style={ isCompleted ? logDailyButtonContainerCompleted : logDailyButtonContainer }
     >
-      <Text style={ isCompleted ? logDailyButtonCompleted : logDailyButton }>30 11 2023</Text>
+      <Text style={ isCompleted ? logDailyButtonCompleted : logDailyButton }>{ log.date }</Text>
     </TouchableOpacity>
   )
 }

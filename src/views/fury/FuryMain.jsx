@@ -86,7 +86,7 @@ const FuryMain = ( { navigation } ) => {
     <SafeAreaView style={ container }>
       <View style={ furyContainer }>
         <View style={ furyHeader }>
-          <Text style={ furyTitle }>RELEASE YOUR FURY</Text>
+          <Text style={ furyTitle }>RELEASE YOUR DOGE</Text>
           <TouchableOpacity
             activeOpacity={ 0.75 }
             onPress={ () => {

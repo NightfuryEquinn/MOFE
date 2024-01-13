@@ -158,7 +158,7 @@ const Home = ( { navigation } ) => {
           />
 
           <View style={ buttonWrapperAltAlt }>
-            <Text style={ buttonLabel }>Fury</Text>
+            <Text style={ buttonLabel }>Doge</Text>
           </View>
         </TouchableOpacity>
       </View>

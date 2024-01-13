@@ -1,10 +1,10 @@
-import { v4 as uuid } from 'uuid'
+import uuid from 'react-native-uuid';
 
 const NoteSchema: Realm.ObjectSchema = {
   name: 'Note',
   primaryKey: '_noteId',
   properties: {
-    _noteId: { type: 'uuid', indexed: true, default: uuid },
+    _noteId: { type: 'string', indexed: true, default: uuid.v4() },
     title: { type: 'string', default: null },
     description: { type: 'string', default: null },
     startDate: { type: 'string', default: null },

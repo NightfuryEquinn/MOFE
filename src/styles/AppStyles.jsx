@@ -257,7 +257,8 @@ export const AppStyles = StyleSheet.create({
     paddingRight: 15,
     fontFamily: 'Kronshtadt',
     fontSize: 20,
-    textAlign: 'right'
+    textAlign: 'right',
+    textTransform: 'uppercase'
   },
   bookmarkContainer: {
     width: 'fit-content',

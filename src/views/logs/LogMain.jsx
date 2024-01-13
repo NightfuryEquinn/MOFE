@@ -1,30 +1,19 @@
 import { SafeAreaView } from "react-native-safe-area-context"
 import { AppStyles } from "../../styles/AppStyles"
 import { useEffect, useState } from "react"
-import { AppState, Image, ScrollView, Text, View } from "react-native"
-import realmDb from "../../realm/RealmDB"
+import { Image, ScrollView, Text, View } from "react-native"
 import CTAButtonList from "../../shared/CTAButtonList"
 import LogDaily from "./LogDaily"
+import { getLogToday, getLogs } from "../../realm/crud/LogCRUD"
+import moment from "moment"
 
 const LogMain = ( { navigation } ) => {
-  const [ appState, setAppState ] = useState( AppState.currentState )
+  const [ hasLogToday, setHasLogToday ] = useState( false )
   const [ logs, setLogs ] = useState( [] )
 
-  const handleAppStateChange = ( nextAppState ) => {
-    if( appState.match( /inactive | background/ ) && nextAppState === 'active' ) {
-      const logSchema = realmDb.objects( 'Log' )
-      const logArray = logSchema.map( log => ( { ...log } ) )
-
-      setLogs( logArray )
-    }
-
-    setAppState( nextAppState )
-  }
-
   useEffect( () => {
-    AppState.addEventListener( 'change', handleAppStateChange )
-
-    console.log( `All Logs -- ${ logs }` )
+    setLogs( getLogs() )
+    setHasLogToday( getLogToday() )
   }, [])
 
   const {
@@ -48,13 +37,13 @@ const LogMain = ( { navigation } ) => {
             showsVerticalScrollIndicator={ false }
           >
             <View>
-              <Text style={ logMonth }>NOVEMBER 2023</Text>
+              <Text style={ logMonth }>{ moment( Date.now() ).format( 'MMMM YYYY' ) }</Text>
               <View style={ logDailyContainer }>
-                <LogDaily navigation={ navigation } isCompleted={ false } />
-                <LogDaily navigation={ navigation } isCompleted={ false } />
-                <LogDaily navigation={ navigation } isCompleted={ false } />
-                <LogDaily navigation={ navigation } isCompleted={ true } />
-                <LogDaily navigation={ navigation } isCompleted={ true } />
+                {
+                  logs.map( ( log, index ) => (
+                    <LogDaily key={ index } log={ log } navigation={ navigation } isCompleted={ log.description } />
+                  ))
+                }
               </View>
             </View>
           </ScrollView>
@@ -80,7 +69,11 @@ const LogMain = ( { navigation } ) => {
             <Text style={ bookmark }>S</Text>
           </View>
 
-          <CTAButtonList navigation={ navigation } manageViewName={ "LogManage" } />
+          <CTAButtonList 
+            navigation={ navigation } 
+            manageViewName={ "LogManage" } 
+            hasLogToday={ hasLogToday }
+          />
         </View>
       </View>
     </SafeAreaView>

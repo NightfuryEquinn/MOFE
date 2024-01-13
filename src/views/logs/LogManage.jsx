@@ -4,11 +4,13 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import CTAButtonList from "../../shared/CTAButtonList"
 import { colors } from "../../assets/colors/Colors"
 import { useState } from "react"
+import { insertLog, updateLog } from "../../realm/crud/LogCRUD"
+import moment from "moment"
 
 const LogManage = ( { route, navigation } ) => {
   const { func, details } = route.params
 
-  const [ logText, setLogText ] = useState( "" )
+  const [ logText, setLogText ] = useState( details[ 1 ] || null )
 
   const {
     container,
@@ -29,7 +31,7 @@ const LogManage = ( { route, navigation } ) => {
         <View style={ logMainContainer }>
           <View style={ logMainLeft }>
             <View style={ logManageHeader }>
-              <Text style={ logManageTitle }>30 NOVEMBER 2023</Text>
+              <Text style={ logManageTitle }>{ func === 'add' ? moment( Date.now() ).format( 'DD MM YYYY' ) : details[ 2 ] }</Text>
             </View>
             
             <KeyboardAvoidingView behavior="height" style={ logContentContainer }>
@@ -66,7 +68,18 @@ const LogManage = ( { route, navigation } ) => {
               <Text style={ bookmark }>S</Text>
             </View>
 
-            <CTAButtonList navigation={ navigation } isAddEdit={ true } manageViewName={ "LogManage" } />
+            <CTAButtonList 
+              navigation={ navigation } 
+              isAddEdit={ true } 
+              manageViewName={ "LogManage" } 
+              manageData={ () => {
+                if( details[ 0 ] ) {
+                  updateLog( details[ 0 ], logText )
+                } else {
+                  insertLog( logText, moment( Date.now() ).format( 'DD MM YYYY' ) )
+                }
+              }}
+            />
           </View>
         </View>
       </TouchableWithoutFeedback>
