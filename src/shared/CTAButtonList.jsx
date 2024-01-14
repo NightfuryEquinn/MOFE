@@ -2,18 +2,22 @@ import { View, TouchableOpacity, Image } from "react-native"
 import { AppStyles } from "../styles/AppStyles"
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useState } from "react";
+import { getLogToday } from "../realm/crud/LogCRUD";
+import moment from "moment";
 
 const CTAButtonList = ( { 
   navigation, 
   isAddEdit = false, 
   manageViewName,
   manageData,
-  hasLogToday = false
+  setFilterDate = null
 } ) => {
   const [ calendar, setCalendar ] = useState( false )
+  const [ hasLogToday, setHasLogToday ] = useState( getLogToday() )
 
   const onFilterDate = ( selectedDate ) => {
     setCalendar( false )
+    setFilterDate( moment( selectedDate ).format( "DD MM YYYY" ) )
   }
 
   const {

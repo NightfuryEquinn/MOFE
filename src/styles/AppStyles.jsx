@@ -582,5 +582,10 @@ export const AppStyles = StyleSheet.create({
   dogeSticker: {
     height: 125,
     width: 125,
+  },
+  noValueLabel: {
+    color: colors.white,
+    fontFamily: 'Kronshtadt',
+    fontSize: 16,
   }
 })

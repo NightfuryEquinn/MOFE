@@ -4,17 +4,15 @@ import { useEffect, useState } from "react"
 import { Image, ScrollView, Text, View } from "react-native"
 import CTAButtonList from "../../shared/CTAButtonList"
 import LogDaily from "./LogDaily"
-import { getLogToday, getLogs } from "../../realm/crud/LogCRUD"
-import moment from "moment"
+import { getFilteredLog, getLogs } from "../../realm/crud/LogCRUD"
 
 const LogMain = ( { navigation } ) => {
-  const [ hasLogToday, setHasLogToday ] = useState( false )
   const [ logs, setLogs ] = useState( [] )
+  const [ filterDate, setFilterDate ] = useState( null )
 
   useEffect( () => {
-    setLogs( getLogs() )
-    setHasLogToday( getLogToday() )
-  }, [])
+    filterDate ? setLogs( getFilteredLog( filterDate ) ) : setLogs( getLogs() ) 
+  }, [ filterDate ])
 
   const {
     container,
@@ -25,7 +23,8 @@ const LogMain = ( { navigation } ) => {
     logMonth,
     logDailyContainer,
     bookmarkContainer,
-    bookmark
+    bookmark,
+    noValueLabel
   } = AppStyles
 
   return (
@@ -36,16 +35,22 @@ const LogMain = ( { navigation } ) => {
             style={ logScroll }
             showsVerticalScrollIndicator={ false }
           >
-            <View>
-              <Text style={ logMonth }>{ moment( Date.now() ).format( 'MMMM YYYY' ) }</Text>
-              <View style={ logDailyContainer }>
-                {
-                  logs.map( ( log, index ) => (
-                    <LogDaily key={ index } log={ log } navigation={ navigation } isCompleted={ log.description } />
-                  ))
-                }
-              </View>
-            </View>
+            {
+              logs && logs.length ?
+              logs.map( ( log, index ) => (
+                <View key={ index }>
+                  <Text style={ logMonth }>{ log.month }</Text>
+                  <View key={ index } style={ logDailyContainer }>
+                  {
+                    log.monthLog.map( ( item, index ) => (
+                      <LogDaily key={ index } log={ item } navigation={ navigation } isCompleted={ item.description } />
+                    ))
+                  }
+                  </View>
+                </View>
+              ))
+              : <Text style={ noValueLabel }>No Logs</Text>
+            }
           </ScrollView>
 
           <Image
@@ -71,8 +76,8 @@ const LogMain = ( { navigation } ) => {
 
           <CTAButtonList 
             navigation={ navigation } 
-            manageViewName={ "LogManage" } 
-            hasLogToday={ hasLogToday }
+            manageViewName={ "LogManage" }
+            setFilterDate={ setFilterDate }
           />
         </View>
       </View>
