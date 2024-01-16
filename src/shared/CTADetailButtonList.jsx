@@ -2,9 +2,16 @@ import { View, TouchableOpacity, Image } from "react-native"
 import { AppStyles } from "../styles/AppStyles"
 import PopupModal from "./PopupModal"
 import { useState } from "react"
+import { completeTask, deleteTask } from "../realm/crud/TaskCRUD"
 
-const CTADetailButtonList = ( { navigation, isCompleted, manageViewName } ) => {
+const CTADetailButtonList = ( { 
+  navigation, 
+  isCompleted,
+  manageViewName,
+  details
+} ) => {
   const [ showDeleteDialog, setShowDeleteDialog ] = useState( false )
+  const [ showCompleteDialog, setShowCompleteDialog ] = useState( false )
 
   const {
     ctaDetailContainerWrapper,
@@ -18,9 +25,23 @@ const CTADetailButtonList = ( { navigation, isCompleted, manageViewName } ) => {
   return (
     <View style={ isCompleted ? ctaDetailContainerWrapperCompleted : ctaDetailContainerWrapper }>
       <PopupModal 
+        showDialog={ showCompleteDialog }
+        setShowDialog={ setShowCompleteDialog }
+        modalTitle={ "COMPLETE?" }
+        manageComplete={ () => { 
+          completeTask( details[ "_taskId" ], true ) 
+          navigation.reset( { index: 0, routes: [ { name: 'Home' } ] } )
+        }}
+      />
+
+      <PopupModal 
         showDialog={ showDeleteDialog }
         setShowDialog={ setShowDeleteDialog }
         modalTitle={ "DELETE?" }
+        manageDelete={ () => { 
+          deleteTask( details[ "_taskId" ] ) 
+          navigation.reset( { index: 0, routes: [ { name: 'Home' } ] } )
+        }}
       />
       
       <View style={ ctaDetailContainer }>
@@ -44,7 +65,7 @@ const CTADetailButtonList = ( { navigation, isCompleted, manageViewName } ) => {
             onPress={ () => {
               navigation.navigate( manageViewName, {
                 func: 'edit',
-                details: []
+                details: details
               })
             }}
             style={ ctaDetailButtonContainer }
@@ -61,7 +82,7 @@ const CTADetailButtonList = ( { navigation, isCompleted, manageViewName } ) => {
           <TouchableOpacity
             activeOpacity={ 0.75 }
             onPress={ () => {
-              
+              setShowCompleteDialog( true )
             }}
             style={ ctaDetailButtonContainer }
           >

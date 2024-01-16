@@ -1,7 +1,7 @@
 {
   "name": "mofe",
   "displayName": "M.O.F.E.",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "android": "adb reverse tcp:8001 tcp:8001 && react-native run-android",

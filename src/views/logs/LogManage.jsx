@@ -4,13 +4,14 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import CTAButtonList from "../../shared/CTAButtonList"
 import { colors } from "../../assets/colors/Colors"
 import { useState } from "react"
-import { insertLog, updateLog } from "../../realm/crud/LogCRUD"
+import { getLogToday, insertLog, updateLog } from "../../realm/crud/LogCRUD"
 import moment from "moment"
 
 const LogManage = ( { route, navigation } ) => {
   const { func, details } = route.params
 
   const [ logText, setLogText ] = useState( details[ 1 ] || null )
+  const [ hasLogToday, setHasLogToday ] = useState( getLogToday() )
 
   const {
     container,
@@ -71,6 +72,7 @@ const LogManage = ( { route, navigation } ) => {
             <CTAButtonList 
               navigation={ navigation } 
               isAddEdit={ true } 
+              hasLogToday={ hasLogToday }
               manageViewName={ "LogManage" } 
               manageData={ () => {
                 if( details[ 0 ] ) {

@@ -2,22 +2,24 @@ import { View, TouchableOpacity, Image } from "react-native"
 import { AppStyles } from "../styles/AppStyles"
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useState } from "react";
-import { getLogToday } from "../realm/crud/LogCRUD";
 import moment from "moment";
+import { convertDateToString } from "../assets/utils/Formatter";
 
 const CTAButtonList = ( { 
   navigation, 
   isAddEdit = false, 
+  isInDetail = false,
+  hasEmptyField = false,
+  hasLogToday = false,
   manageViewName,
   manageData,
   setFilterDate = null
 } ) => {
   const [ calendar, setCalendar ] = useState( false )
-  const [ hasLogToday, setHasLogToday ] = useState( getLogToday() )
 
   const onFilterDate = ( selectedDate ) => {
     setCalendar( false )
-    setFilterDate( moment( selectedDate ).format( "DD MM YYYY" ) )
+    manageViewName === "LogManage" ? setFilterDate( moment( selectedDate ).format( "DD MM YYYY" ) ) : setFilterDate( convertDateToString( selectedDate ) )
   }
 
   const {
@@ -28,7 +30,7 @@ const CTAButtonList = ( {
 
   return (
     <View style={ ctaContainer }>
-      { isAddEdit ? 
+      { isAddEdit && (hasEmptyField || manageViewName === "LogManage" ) ?
         <TouchableOpacity
           activeOpacity={ 0.75 }
           onPress={ () => {
@@ -65,7 +67,7 @@ const CTAButtonList = ( {
         null
       }
 
-      { !isAddEdit ? 
+      { !isAddEdit && !isInDetail ? 
         <TouchableOpacity
           activeOpacity={ 0.75 }
           onPress={ () => {
@@ -83,7 +85,7 @@ const CTAButtonList = ( {
         null
       }
 
-      { !isAddEdit && !hasLogToday ? 
+      { !isAddEdit && (( hasLogToday && manageViewName === "LogManage" ) || ( manageViewName === "TaskManage" )) ? 
         <TouchableOpacity
           activeOpacity={ 0.75 }
           onPress={ () => {

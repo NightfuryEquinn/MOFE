@@ -5,27 +5,17 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { AppStyles } from "../../styles/AppStyles"
 import TaskDaily from "./TaskDaily"
 import CTAButtonList from "../../shared/CTAButtonList"
+import { getFilteredTask, getTasks } from "../../realm/crud/TaskCRUD"
 
 const TaskMain = ( { navigation } ) => {
-  const [ appState, setAppState ] = useState( AppState.currentState )
   const [ tasks, setTasks ] = useState( [] )
-
-  const handleAppStateChange = ( nextAppState ) => {
-    if( appState.match( /inactive | background/ ) && nextAppState === 'active' ) {
-      const taskSchema = realmDb.objects( 'Task' )
-      const taskArray = taskSchema.map( task => ( { ...task } ) )
-
-      setTasks( taskArray )
-    }
-
-    setAppState( nextAppState )
-  }
+  const [ filterDate, setFilterDate ] = useState( null )
 
   useEffect( () => {
-    AppState.addEventListener( 'change', handleAppStateChange )
+    filterDate ? setTasks( getFilteredTask( filterDate ) ) : setTasks( getTasks() )
 
     console.log( `All Tasks -- ${ tasks }` )
-  }, [] )
+  }, [ filterDate ] )
 
   const {
     container,
@@ -34,7 +24,8 @@ const TaskMain = ( { navigation } ) => {
     taskMainRight,
     taskScroll,
     bookmark,
-    bookmarkContainer
+    bookmarkContainer,
+    noValueLabel
   } = AppStyles
 
   return (
@@ -45,7 +36,13 @@ const TaskMain = ( { navigation } ) => {
             style={ taskScroll }
             showsVerticalScrollIndicator={ false }
           >
-            <TaskDaily navigation={ navigation } />
+            {
+              tasks && tasks.length ?
+              tasks.map( ( task, index ) => (
+                <TaskDaily key={ index } task={ task } navigation={ navigation } />
+              ))
+              : <Text style={ noValueLabel }>No Tasks</Text>
+            }
           </ScrollView>
           
           <Image
@@ -70,7 +67,11 @@ const TaskMain = ( { navigation } ) => {
             <Text style={ bookmark }>K</Text>
           </View>
 
-          <CTAButtonList navigation={ navigation } manageViewName={ "TaskManage" } />
+          <CTAButtonList 
+            navigation={ navigation } 
+            manageViewName={ "TaskManage" } 
+            setFilterDate={ setFilterDate }
+          />
         </View>
       </View>
     </SafeAreaView>

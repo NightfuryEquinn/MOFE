@@ -2,7 +2,18 @@ import moment from "moment"
 import realmDb from "../RealmDB"
 import uuid from "react-native-uuid"
 
-export const getLogs = () => {
+interface Log {
+  _logId: string
+  description: string
+  date: string
+}
+
+interface LogGroup {
+  month: string
+  monthLog: Log[]
+}
+
+export const getLogs = (): LogGroup[] => {
   try {
     const logs = realmDb.objects( 'Log' )
     const logArray = logs.map( log => ( { ...log } ) )
@@ -10,7 +21,7 @@ export const getLogs = () => {
 
     logArray.forEach( log => {
       const groupMonthYear: any = log.date
-      const key = groupMonthYear.slice( -7 )
+      const key: string = groupMonthYear.slice( -7 )
 
       if( !logGroup[ key ] ) {
         logGroup[ key ] = { month: key, monthLog: [] }
@@ -19,13 +30,17 @@ export const getLogs = () => {
       logGroup[ key ].monthLog.push( log )
     })
 
-    return sortLog( Object.values( logGroup ) )
+    const sortedGetLogs: LogGroup[] = sortLog( Object.values( logGroup ) )
+
+    return sortedGetLogs
   } catch ( err ) {
     console.log( err )
+
+    return []
   }
 }
 
-export const getLogToday = () => {
+export const getLogToday = (): boolean => {
   try {
     const todayDate = moment( Date.now() ).format( "DD MM YYYY" )
     const logs = realmDb.objects( 'Log' ).filtered( "date == $0", todayDate )
@@ -34,10 +49,12 @@ export const getLogToday = () => {
     return logArray.length > 0
   } catch ( err ) {
     console.log( err )
+
+    return false
   }
 }
 
-export const getFilteredLog = ( date: string ) => {
+export const getFilteredLog = ( date: string ): LogGroup[] => {
   try {
     // Create default empty log
     insertDefaultLog( date )
@@ -48,7 +65,7 @@ export const getFilteredLog = ( date: string ) => {
 
     logArray.forEach( log => {
       const groupMonthYear: any = log.date
-      const key = groupMonthYear.slice( -7 )
+      const key: string = groupMonthYear.slice( -7 )
 
       if( !logGroup[ key ] ) {
         logGroup[ key ] = { month: key, monthLog: [] }
@@ -57,44 +74,14 @@ export const getFilteredLog = ( date: string ) => {
       logGroup[ key ].monthLog.push( log )
     })
 
-    return Object.values( logGroup )
+    const filteredLog: LogGroup[] = Object.values( logGroup )
+
+    return filteredLog
   } catch ( err ) {
     console.log( err )
+
+    return []
   }
-}
-
-export const sortLog = ( logGroup: any[] ) => {
-  const sortedLogGroup = logGroup.map( group => {
-    const sortedMonthLog = [ ...group.monthLog ].sort( ( log1, log2 ) => {
-      const date1 = moment( log1.date, "DD MM YYYY" ).toDate()
-      const date2 = moment( log2.date, "DD MM YYYY" ).toDate()
-
-      if( date1 < date2 ) {
-        return -1
-      } else if( date1 > date2 ) {
-        return 1
-      } else {
-        return 0
-      }
-    })
-
-    return { ...group, monthLog: sortedMonthLog }
-  })
-
-  sortedLogGroup.sort( ( group1, group2 ) => {
-    const date1 = moment( group1.month, 'MM YYYY' ).toDate();
-    const date2 = moment( group2.month, 'MM YYYY' ).toDate();
-
-    if ( date1 > date2 ) {
-      return -1
-    } else if ( date1 < date2 ) {
-      return 1
-    } else {
-      return 0
-    }
-  })
-
-  return sortedLogGroup
 }
 
 export const insertLog = ( description: string, date: string ) => {
@@ -131,7 +118,7 @@ export const updateLog = ( _logId: string, description: string ) => {
   try {
     if( logToUpdate ) {
       realmDb.write( () => {
-        logToUpdate.description = description
+        logToUpdate.description = description;
       })
     }
   } catch ( err ) {
@@ -150,5 +137,45 @@ export const deleteLog = ( _logId: string ) => {
     }
   } catch ( err ) {
     console.log( err )
+  }
+}
+
+const sortLog = ( logGroup: LogGroup[] ): LogGroup[] => {
+  try {
+    const sortedLogGroup: LogGroup[] = logGroup.map( ( group ): LogGroup => {
+      const sortedMonthLog = [ ...group.monthLog ].sort( ( log1: Log, log2: Log ) => {
+        const date1 = moment( log1.date, "DD MM YYYY" ).toDate()
+        const date2 = moment( log2.date, "DD MM YYYY" ).toDate()
+  
+        if( date1 < date2 ) {
+          return -1
+        } else if( date1 > date2 ) {
+          return 1
+        } else {
+          return 0
+        }
+      })
+  
+      return { ...group, monthLog: sortedMonthLog }
+    })
+  
+    sortedLogGroup.sort( ( group1: LogGroup, group2: LogGroup ) => {
+      const date1 = moment( group1.month, 'MM YYYY' ).toDate()
+      const date2 = moment( group2.month, 'MM YYYY' ).toDate()
+  
+      if( date1 > date2 ) {
+        return -1
+      } else if( date1 < date2 ) {
+        return 1
+      } else {
+        return 0
+      }
+    })
+  
+    return sortedLogGroup
+  } catch ( err ) {
+    console.log( err )
+
+    return []
   }
 }

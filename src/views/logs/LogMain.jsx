@@ -12,7 +12,7 @@ const LogMain = ( { navigation } ) => {
 
   useEffect( () => {
     filterDate ? setLogs( getFilteredLog( filterDate ) ) : setLogs( getLogs() ) 
-  }, [ filterDate ])
+  }, [ filterDate ] )
 
   const {
     container,

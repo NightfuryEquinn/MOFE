@@ -5,6 +5,8 @@ import CTAButtonList from "../../shared/CTAButtonList"
 import { useState } from "react"
 import { colors } from "../../assets/colors/Colors"
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { insertTask, updateTask } from "../../realm/crud/TaskCRUD"
+import { convertDateToString, convertTimeStringToDate } from "../../assets/utils/Formatter"
 
 const TaskManage = ( { route, navigation } ) => {
   const { func, details } = route.params
@@ -13,15 +15,18 @@ const TaskManage = ( { route, navigation } ) => {
   const [ showStart, setShowStart ] = useState( false )
   const [ showEnd, setShowEnd ] = useState( false )
 
-  const [ taskTitle, setTaskTitle ] = useState( null )
-  const [ taskDesc, setTaskDesc ] = useState( null )
-  const [ taskDate, setTaskDate ] = useState( null )
-  const [ taskStart, setTaskStart ] = useState( null )
-  const [ taskEnd, setTaskEnd ] = useState( null )
+  const [ taskTitle, setTaskTitle ] = useState( details[ 'title' ] || null )
+  const [ taskDesc, setTaskDesc ] = useState( details[ 'description' ] || null )
+  const [ taskDate, setTaskDate ] = useState( details[ 'date' ] || null )
+  const [ taskStart, setTaskStart ] = useState( details[ 'startTime' ] || null )
+  const [ taskEnd, setTaskEnd ] = useState( details[ 'endTime' ] || null )
+
+  const [ startTime, setStartTime ] = useState( convertTimeStringToDate( details[ 'startTime' ] ) || null )
+  const [ endTime, setEndTime ] = useState( convertTimeStringToDate( details[ 'endTime' ] ) || null )
 
   const onChangeDate = ( selectedDate ) => {
     let tempDate = new Date( selectedDate )
-    let fDate = tempDate.getFullYear() + 'Y ' + ( tempDate.getMonth() + 1 ) + 'M ' + tempDate.getDate() + 'D'
+    let fDate = convertDateToString( tempDate )
 
     setTaskDate( fDate )
     setShowDate( false )
@@ -29,6 +34,8 @@ const TaskManage = ( { route, navigation } ) => {
 
   const onChangeStart = ( selectedDate ) => {
     let tempDate = new Date( selectedDate )
+    setStartTime( selectedDate )
+
     let fTime = tempDate.getHours() + 'H ' + tempDate.getMinutes() + 'M'
 
     setTaskStart( fTime )
@@ -37,6 +44,8 @@ const TaskManage = ( { route, navigation } ) => {
 
   const onChangeEnd = ( selectedDate ) => {
     let tempDate = new Date( selectedDate )
+    setEndTime( selectedDate )
+
     let fTime = tempDate.getHours() + 'H ' + tempDate.getMinutes() + 'M'
 
     setTaskEnd( fTime )
@@ -172,7 +181,19 @@ const TaskManage = ( { route, navigation } ) => {
               <Text style={ bookmark }>K</Text>
             </View>
 
-            <CTAButtonList navigation={ navigation } isAddEdit={ true } />
+            <CTAButtonList 
+              navigation={ navigation } 
+              isAddEdit={ true }
+              manageViewName={ "TaskManage" }
+              hasEmptyField={ taskTitle && taskDesc && taskDate && taskStart && taskEnd && ( startTime < endTime ) }
+              manageData={ () => {
+                if( details[ "_taskId" ] ) {
+                  updateTask( details[ "_taskId" ], taskTitle, taskDesc, taskDate, taskStart, taskEnd )
+                } else {
+                  insertTask( taskTitle, taskDesc, taskDate, taskStart, taskEnd )
+                }
+              }}
+            />
           </View>
         </View>
       </TouchableWithoutFeedback>

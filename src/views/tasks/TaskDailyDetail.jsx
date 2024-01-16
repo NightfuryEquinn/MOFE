@@ -3,8 +3,13 @@ import { AppStyles } from "../../styles/AppStyles"
 import { SafeAreaView } from "react-native-safe-area-context"
 import CTAButtonList from "../../shared/CTAButtonList"
 import TaskDetail from "./TaskDetail"
+import { formatDateToDisplay } from "../../assets/utils/Formatter"
 
-const TaskDailyDetail = ( { navigation } ) => {
+const TaskDailyDetail = ( { route, navigation } ) => {
+  const { details } = route.params
+
+  console.log( details )
+
   const {
     container,
     headerDividerAlt,
@@ -14,7 +19,8 @@ const TaskDailyDetail = ( { navigation } ) => {
     taskScroll,
     taskMainRight,
     bookmarkContainer,
-    bookmark
+    bookmark,
+    noValueLabel
   } = AppStyles
 
   return (
@@ -22,14 +28,19 @@ const TaskDailyDetail = ( { navigation } ) => {
       <View style={ taskMainContainer }>
         <View style={ taskMainLeft }>
           <View style={ headerDividerAlt }>
-            <Text style={ headerAlt }>30 11 2023</Text>
+            <Text style={ headerAlt }>{ formatDateToDisplay( details.date ) }</Text>
           </View>
 
           <ScrollView
             style={ taskScroll }
             showsVerticalScrollIndicator={ false }
           >
-            <TaskDetail navigation={ navigation } isCompleted={ false } />
+            { details.dateTask && details.dateTask.length ?
+              details.dateTask.map( ( taskDetails, index ) => (
+                <TaskDetail key={ index } taskDetails={ taskDetails } navigation={ navigation } />
+              ))
+              : <Text style={ noValueLabel }>No Task Details</Text>
+            }
           </ScrollView>
           
           <Image
@@ -54,7 +65,11 @@ const TaskDailyDetail = ( { navigation } ) => {
             <Text style={ bookmark }>K</Text>
           </View>
 
-          <CTAButtonList navigation={ navigation } manageViewName={ "TaskManage" } />
+          <CTAButtonList 
+            navigation={ navigation } 
+            isInDetail={ true }
+            manageViewName={ "TaskManage" } 
+          />
         </View>
       </View>
     </SafeAreaView>

@@ -214,18 +214,12 @@ export const AppStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  taskMore: {
-    width: 28,
-    height: 28,
-  },
-  noteMore: {
-    width: 28,
-    height: 28,
-  },
   taskPreview: {
+    marginLeft: 'auto',
     gap: 5
   },
   notePreview: {
+    marginLeft: 'auto',
     gap: 5
   },
   taskPreviewLabel: {
@@ -363,6 +357,7 @@ export const AppStyles = StyleSheet.create({
     paddingRight: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: colors.deepblue,
     borderBottomLeftRadius: 20,
   },
@@ -404,6 +399,7 @@ export const AppStyles = StyleSheet.create({
     fontSize: 18,
     color: colors.white,
     marginRight: 10,
+    alignItems: 'center'
   },
   noteTitle: {
     fontFamily: 'Kronshtadt',

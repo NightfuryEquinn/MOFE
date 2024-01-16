@@ -1,8 +1,12 @@
 import { Text, View } from "react-native"
 import { AppStyles } from "../../styles/AppStyles"
 import CTADetailButtonList from "../../shared/CTADetailButtonList"
+import { calculateDuration, formatTimeToDisplay } from "../../assets/utils/Formatter"
+import { completeTask, deleteTask } from "../../realm/crud/TaskCRUD"
 
-const TaskDetail = ( { navigation, isCompleted } ) => {
+const TaskDetail = ( { taskDetails, navigation } ) => {
+  const { _taskId, title, description, startTime, endTime, isCompleted } = taskDetails
+
   const {
     taskDetailContainer,
     taskDetailContainerCompleted,
@@ -17,32 +21,37 @@ const TaskDetail = ( { navigation, isCompleted } ) => {
   return (
     <View style={ isCompleted ? taskDetailContainerCompleted : taskDetailContainer }>
       <View style={ taskDetailLeft }>
-        <Text style={ isCompleted ? taskTitleCompleted : taskTitle }>Meeting with The Queen</Text>
+        <Text style={ isCompleted ? taskTitleCompleted : taskTitle }>{ title }</Text>
 
         { !isCompleted && 
           <View style={ taskContentContainer }>
             <Text style={ taskDetail }>Time:</Text>
-            <Text style={ taskDetail }>4:00pm to 7:00pm</Text>
+            <Text style={ taskDetail }>{ `${ formatTimeToDisplay( startTime ) } to ${ formatTimeToDisplay( endTime ) }` }</Text>
           </View> 
         }
 
         { !isCompleted && 
           <View style={ taskContentContainer }>
             <Text style={ taskDetail }>Duration:</Text>
-            <Text style={ taskDetail }>3 hours</Text>
+            <Text style={ taskDetail }>{ calculateDuration( startTime, endTime ) }</Text>
           </View>
         }
 
         { !isCompleted && 
           <View style={ taskContentContainer }>
             <Text style={ taskDetail }>Description:</Text>
-            <Text style={ taskDetail }>Lorem ipsum dolor sit actum lorem ipsum</Text>
+            <Text style={ taskDetail }>{ description }</Text>
           </View>
         }
       </View>
 
       <View style={ taskDetailRight }>
-        <CTADetailButtonList navigation={ navigation } isCompleted={ isCompleted } manageViewName={ "TaskManage" } />
+        <CTADetailButtonList 
+          navigation={ navigation } 
+          isCompleted={ isCompleted } 
+          manageViewName={ "TaskManage" }
+          details={ taskDetails }
+        />
       </View>
     </View>
   )

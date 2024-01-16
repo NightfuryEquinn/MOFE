@@ -3,7 +3,7 @@ import { AppStyles } from "../styles/AppStyles"
 import Modal from "react-native-modal"
 import { colors } from "../assets/colors/Colors"
 
-const PopupModal = ( { showDialog, setShowDialog, modalTitle } ) => {
+const PopupModal = ( { showDialog, setShowDialog, modalTitle, manageDelete, manageComplete } ) => {
   const {
     modalContainer,
     modalContent,
@@ -32,7 +32,9 @@ const PopupModal = ( { showDialog, setShowDialog, modalTitle } ) => {
             activeOpacity={ 0.75 }
             style={ modalButton }
             onPress={ () => {
-
+              manageDelete && manageDelete()
+              manageComplete && manageComplete()
+              setShowDialog( false )
             }}
           >
             <Text style={ modalButtonText }>Yes</Text>
@@ -42,7 +44,7 @@ const PopupModal = ( { showDialog, setShowDialog, modalTitle } ) => {
             activeOpacity={ 0.75 }
             style={ modalButton }
             onPress={ () => {
-
+              setShowDialog( false )
             }}
           >
             <Text style={ modalButtonText }>No</Text>
