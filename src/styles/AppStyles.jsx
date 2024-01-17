@@ -368,6 +368,7 @@ export const AppStyles = StyleSheet.create({
     paddingRight: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: colors.deepblue,
     borderBottomLeftRadius: 20,
   },

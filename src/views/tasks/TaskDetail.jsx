@@ -2,10 +2,9 @@ import { Text, View } from "react-native"
 import { AppStyles } from "../../styles/AppStyles"
 import CTADetailButtonList from "../../shared/CTADetailButtonList"
 import { calculateDuration, formatTimeToDisplay } from "../../assets/utils/Formatter"
-import { completeTask, deleteTask } from "../../realm/crud/TaskCRUD"
 
 const TaskDetail = ( { taskDetails, navigation } ) => {
-  const { _taskId, title, description, startTime, endTime, isCompleted } = taskDetails
+  const { title, description, startTime, endTime, isCompleted } = taskDetails
 
   const {
     taskDetailContainer,

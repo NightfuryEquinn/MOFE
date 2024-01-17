@@ -4,7 +4,11 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import NoteDetail from "./NoteDetail"
 import CTAButtonList from "../../shared/CTAButtonList"
 
-const NoteDailyDetail = ( { navigation } ) => {
+const NoteDailyDetail = ( { route, navigation } ) => {
+  const { details } = route.params
+
+  console.log( details )
+
   const {
     container,
     noteMainContainer,
@@ -14,7 +18,8 @@ const NoteDailyDetail = ( { navigation } ) => {
     headerAlt,
     noteScroll,
     bookmarkContainer,
-    bookmark
+    bookmark,
+    noValueLabel
   } = AppStyles
   
   return (
@@ -22,14 +27,20 @@ const NoteDailyDetail = ( { navigation } ) => {
       <View style={ noteMainContainer }>
         <View style={ noteMainLeft }>
           <View style={ headerDividerAlt }>
-            <Text style={ headerAlt }>12 2023</Text>
+            <Text style={ headerAlt }>{ details[ "month" ] }</Text>
           </View>
 
           <ScrollView
             style={ noteScroll }
             showsVerticalScrollIndicator={ false }
           >
-            <NoteDetail navigation={ navigation } isCompleted={ false } />
+            {
+              details.monthNote && details.monthNote.length ?
+              details.monthNote.map( ( noteDetails, index ) => (
+                <NoteDetail key={ index } noteDetails={ noteDetails } navigation={ navigation } />
+              ))
+              : <Text style={ noValueLabel }>No Note Details</Text>
+            }
           </ScrollView>
 
           <Image

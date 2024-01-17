@@ -3,6 +3,7 @@ import { AppStyles } from "../styles/AppStyles"
 import PopupModal from "./PopupModal"
 import { useState } from "react"
 import { completeTask, deleteTask } from "../realm/crud/TaskCRUD"
+import { completeNote, deleteNote } from "../realm/crud/NoteCRUD"
 
 const CTADetailButtonList = ( { 
   navigation, 
@@ -29,7 +30,7 @@ const CTADetailButtonList = ( {
         setShowDialog={ setShowCompleteDialog }
         modalTitle={ "COMPLETE?" }
         manageComplete={ () => { 
-          completeTask( details[ "_taskId" ], true ) 
+          manageViewName === "taskManage" ? completeTask( details[ "_taskId" ], true ) : completeNote( details[ "_noteId" ], true )
           navigation.reset( { index: 0, routes: [ { name: 'Home' } ] } )
         }}
       />
@@ -39,7 +40,7 @@ const CTADetailButtonList = ( {
         setShowDialog={ setShowDeleteDialog }
         modalTitle={ "DELETE?" }
         manageDelete={ () => { 
-          deleteTask( details[ "_taskId" ] ) 
+          manageViewName === "taskManage" ? deleteTask( details[ "_taskId" ] ) : deleteNote( details[ "_noteId" ] )
           navigation.reset( { index: 0, routes: [ { name: 'Home' } ] } )
         }}
       />

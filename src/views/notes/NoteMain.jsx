@@ -1,31 +1,20 @@
 import { useEffect, useState } from "react"
-import { AppState, Image, ScrollView, Text, View } from "react-native"
-import realmDb from "../../realm/RealmDB"
+import { Image, ScrollView, Text, View } from "react-native"
 import { AppStyles } from "../../styles/AppStyles"
 import { SafeAreaView } from "react-native-safe-area-context"
 import CTAButtonList from "../../shared/CTAButtonList"
 import NoteDaily from "./NoteDaily"
+import { getFilteredNote, getNotes } from "../../realm/crud/NoteCRUD"
 
 const NoteMain = ( { navigation } ) => {
-  const [ appState, setAppState ] = useState( AppState.currentState )
   const [ notes, setNotes ] = useState( [] )
-
-  const handleAppStateChange = ( nextAppState ) => {
-    if( appState.match( /inactive | background/ ) && nextAppState === 'active' ) {
-      const noteSchema = realmDb.objects( 'Note' )
-      const noteArray = noteSchema.map( note => ( { ...note } ) )
-
-      setTasks( noteArray )
-    }
-
-    setAppState( nextAppState )
-  }
+  const [ filterDate, setFilterDate ] = useState( null )
 
   useEffect( () => {
-    AppState.addEventListener( 'change', handleAppStateChange )
+    filterDate ? setNotes( getFilteredNote( filterDate ) ) : setNotes( getNotes() )
 
     console.log( `All Notes -- ${ notes }` )
-  }, [] )
+  }, [ filterDate ] )
 
   const {
     container,
@@ -34,7 +23,8 @@ const NoteMain = ( { navigation } ) => {
     noteMainRight,
     noteScroll,
     bookmarkContainer,
-    bookmark
+    bookmark,
+    noValueLabel
   } = AppStyles
 
   return (
@@ -45,7 +35,13 @@ const NoteMain = ( { navigation } ) => {
             style={ noteScroll }
             showsVerticalScrollIndicator={ false }
           >
-            <NoteDaily navigation={ navigation } />
+            {
+              notes && notes.length ?
+              notes.map( ( note, index ) => (
+                <NoteDaily key={ index } note={ note } navigation={ navigation } />
+              ))
+              : <Text style={ noValueLabel }>No Notes</Text>
+            }
           </ScrollView>
 
           <Image
@@ -70,7 +66,10 @@ const NoteMain = ( { navigation } ) => {
             <Text style={ bookmark }>E</Text>
           </View>
 
-          <CTAButtonList navigation={ navigation } manageViewName={ "NoteManage" } />
+          <CTAButtonList 
+            navigation={ navigation } 
+            manageViewName={ "NoteManage" } 
+          />
         </View>
       </View>
     </SafeAreaView>

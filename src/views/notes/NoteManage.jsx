@@ -5,6 +5,8 @@ import CTAButtonList from "../../shared/CTAButtonList"
 import { useState } from "react"
 import { colors } from "../../assets/colors/Colors"
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { convertDateToDateFormat, convertDateToString, convertTimeStringToDate } from "../../assets/utils/Formatter"
+import { insertNote, updateNote } from "../../realm/crud/NoteCRUD"
 
 const NoteManage = ( { route, navigation } ) => {
   const { func, details } = route.params
@@ -14,16 +16,23 @@ const NoteManage = ( { route, navigation } ) => {
   const [ showEndDate, setShowEndDate ] = useState( false )
   const [ showEndTime, setShowEndTime ] = useState( false )
 
-  const [ noteTitle, setNoteTitle ] = useState( null )
-  const [ noteDesc, setNoteDesc ] = useState( null )
-  const [ noteStartDate, setNoteStartDate ] = useState( null )
-  const [ noteStartTime, setNoteStartTime ] = useState( null )
-  const [ noteEndDate, setNoteEndDate ] = useState( null )
-  const [ noteEndTime, setNoteEndTime ] = useState( null )
+  const [ noteTitle, setNoteTitle ] = useState( details[ 'title' ] || null )
+  const [ noteDesc, setNoteDesc ] = useState( details[ 'description' ] || null )
+  const [ noteStartDate, setNoteStartDate ] = useState( details[ 'startDate' ] || null )
+  const [ noteStartTime, setNoteStartTime ] = useState( details[ 'startTime' ] || null )
+  const [ noteEndDate, setNoteEndDate ] = useState( details[ 'endDate' ] || null )
+  const [ noteEndTime, setNoteEndTime ] = useState( details[ 'endTime' ] || null )
 
+  const [ startDate, setStartDate ] = useState( convertDateToDateFormat( details[ "startDate" ] ) || null )
+  const [ endDate, setEndDate ] = useState( convertDateToDateFormat( details[ "startDate" ] ) || null )
+  const [ startTime, setStartTime ] = useState( convertTimeStringToDate( details[ 'startTime' ] || null ) )
+  const [ endTime, setEndTime ] = useState( convertTimeStringToDate( details[ 'startTime' ] || null ) )
+  
   const onChangeStartDate = ( selectedDate ) => {
     let tempDate = new Date( selectedDate )
-    let fDate = tempDate.getFullYear() + 'Y ' + ( tempDate.getMonth() + 1 ) + 'M ' + tempDate.getDate() + 'D'
+    setStartDate( tempDate )
+    
+    let fDate = convertDateToString( tempDate )
 
     setNoteStartDate( fDate )
     setShowStartDate( false )
@@ -31,6 +40,8 @@ const NoteManage = ( { route, navigation } ) => {
 
   const onChangeStartTime = ( selectedDate ) => {
     let tempDate = new Date( selectedDate )
+    setStartTime( tempDate )
+
     let fTime = tempDate.getHours() + 'H ' + tempDate.getMinutes() + 'M'
 
     setNoteStartTime( fTime )
@@ -39,7 +50,9 @@ const NoteManage = ( { route, navigation } ) => {
 
   const onChangeEndDate = ( selectedDate ) => {
     let tempDate = new Date( selectedDate )
-    let fDate = tempDate.getFullYear() + 'Y ' + ( tempDate.getMonth() + 1 ) + 'M ' + tempDate.getDate() + 'D'
+    setEndDate( tempDate )
+
+    let fDate = convertDateToString( tempDate )
 
     setNoteEndDate( fDate )
     setShowEndDate( false )
@@ -47,6 +60,8 @@ const NoteManage = ( { route, navigation } ) => {
 
   const onChangeEndTime = ( selectedDate ) => {
     let tempDate = new Date( selectedDate )
+    setEndTime( tempDate )
+
     let fTime = tempDate.getHours() + 'H ' + tempDate.getMinutes() + 'M'
 
     setNoteEndTime( fTime )
@@ -202,7 +217,19 @@ const NoteManage = ( { route, navigation } ) => {
               <Text style={ bookmark }>E</Text>
             </View>
 
-            <CTAButtonList navigation={ navigation } isAddEdit={ true } />
+            <CTAButtonList 
+              navigation={ navigation } 
+              isAddEdit={ true } 
+              manageViewName={ "NoteManage" }
+              hasEmptyField={ noteTitle && noteDesc && noteStartDate && noteStartTime && noteEndDate && noteEndTime && ( new Date( `${ startDate }` ).setHours( startTime.getHours(), startTime.getMinutes() ) < new Date( `${ endDate }` ).setHours( endTime.getHours(), endTime.getMinutes() ) ) }
+              manageData={ () => {
+                if( details[ "_noteId" ] ) {
+                  updateNote( details[ "_noteId" ], noteTitle, noteDesc, noteStartDate, noteEndDate, noteStartTime, noteEndTime )
+                } else { 
+                  insertNote( noteTitle, noteDesc, noteStartDate, noteEndDate, noteEndTime, noteEndTime)
+                }
+              }}
+            />
           </View>
         </View>
       </TouchableWithoutFeedback>

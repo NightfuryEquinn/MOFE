@@ -1,5 +1,9 @@
 import moment from "moment"
 
+export const isDateBetween = ( target: Date, start: Date, end: Date ): boolean => {
+  return target >= start && target <= end
+}
+
 export const convertTimeStringToMinutes = ( time: string ): number => {
   const [ hours, minutes ] = time.split( 'H' ).map( str => parseInt( str, 10 ) )
 
@@ -27,6 +31,41 @@ export const convertTimeStringToDate = ( time: string ) => {
       return date
     }
   }
+}
+
+export const convertDateToDateFormat = ( time: any ): Date => {
+  if( time ) {
+    const [ years, months, days ] = time.split( ' ' ).map( ( str: string ) => parseInt( str ) )
+    const convertToString = years + '-' + months + '-' + days
+  
+    const convertToDate = new Date( convertToString )
+  
+    return convertToDate
+  }
+
+  return new Date()
+}
+
+export const convertDateTimeToDateFormat = ( date: any, time: any ): string => {
+  if( date && time ) {
+    const [ years, months, days ] = time.split( ' ' ).map( ( str: string ) => parseInt( str ) )
+    const convertToString = years + '-' + months + '-' + days
+  
+    const convertToDate = new Date( convertToString )
+
+    console.log( convertToDate )
+
+    const splitTime = time.match( /(\d+)H (\d+)M/ )
+    const hours = parseInt( splitTime[ 1 ], 10 )
+    const minutes = parseInt( splitTime[ 2 ], 10 )
+
+    convertToDate.setHours( hours )
+    convertToDate.setMinutes( minutes )
+  
+    return convertToDate.toLocaleString()
+  }
+
+  return ""
 }
 
 export const formatDateToDisplay = ( time: string ): string => {

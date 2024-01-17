@@ -46,8 +46,6 @@ export const getTasks = (): TaskGroup[] => {
 
     const sortedGetTasks: TaskGroup[] = sortTask( Object.values( taskGroup ) )
 
-    console.log( sortedGetTasks )
-
     return sortedGetTasks
   } catch ( err ) {
     console.log( err )

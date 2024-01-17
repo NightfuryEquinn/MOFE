@@ -1,8 +1,11 @@
 import { Text, View } from "react-native"
 import { AppStyles } from "../../styles/AppStyles"
 import CTADetailButtonList from "../../shared/CTADetailButtonList"
+import { convertDateTimeToDateFormat } from "../../assets/utils/Formatter"
 
-const NoteDetail = ( { navigation, isCompleted } ) => {
+const NoteDetail = ( { noteDetails, navigation } ) => {
+  const { title, description, startDate, endDate, startTime, endTime, isCompleted } = noteDetails 
+
   const {
     noteDetailContainer,
     noteDetailContainerCompleted,
@@ -17,12 +20,12 @@ const NoteDetail = ( { navigation, isCompleted } ) => {
   return (
     <View style={ isCompleted ? noteDetailContainerCompleted : noteDetailContainer }>
       <View style={ noteDetailLeft }>
-        <Text style={ isCompleted ? noteTitleCompleted : noteTitle }>Meeting with The Queen</Text>
+        <Text style={ isCompleted ? noteTitleCompleted : noteTitle }>{ title }</Text>
 
         { !isCompleted && 
           <View style={ noteContentContainer }>
             <Text style={ noteDetail }>Period:</Text>
-            <Text style={ noteDetail }>29-12-2023 4:00pm to 30-12-2023 5:00pm</Text>
+            <Text style={ noteDetail }>{ `${ convertDateTimeToDateFormat( startDate, startTime ) } to ${ convertDateTimeToDateFormat( endDate, endTime ) }` }</Text>
           </View>
         }
 
@@ -36,13 +39,18 @@ const NoteDetail = ( { navigation, isCompleted } ) => {
         { !isCompleted && 
           <View style={ noteContentContainer }>
             <Text style={ noteDetail }>Description:</Text>
-            <Text style={ noteDetail }>Lorem ipsum dolor sit actum lorem ipsum</Text>
+            <Text style={ noteDetail }>{ description }</Text>
           </View>
         }
       </View>
 
       <View style={ noteDetailRight }>
-        <CTADetailButtonList navigation={ navigation } isCompleted={ isCompleted } manageViewName={ "NoteManage" } />
+        <CTADetailButtonList 
+          navigation={ navigation } 
+          isCompleted={ isCompleted } 
+          manageViewName={ "NoteManage" }
+          details={ noteDetails }
+        />
       </View>
     </View>
   )

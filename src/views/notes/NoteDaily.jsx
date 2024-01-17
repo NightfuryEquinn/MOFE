@@ -1,17 +1,12 @@
-import { Image, Text, TouchableOpacity, View } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import { AppStyles } from "../../styles/AppStyles"
-import { useState } from "react"
-import PopupModal from "../../shared/PopupModal"
 
-const NoteDaily = ( { navigation } ) => {
-  const [ showDeleteAllDialog, setShowDeleteAllDialog ] = useState( false )
-
+const NoteDaily = ( { note, navigation } ) => {
   const {
     noteContainer,
     noteDateContainer,
     noteDate,
     notePreviewContainer,
-    noteMore,
     notePreview,
     notePreviewLabel
   } = AppStyles
@@ -20,36 +15,35 @@ const NoteDaily = ( { navigation } ) => {
     <TouchableOpacity
       activeOpacity={ 0.75 }
       onPress={ () => {
-        navigation.navigate( "NoteDailyDetail" )
+        navigation.navigate( "NoteDailyDetail", {
+          details: note
+        })
       }}
       style={ noteContainer }
     >
-      <PopupModal 
-        showDialog={ showDeleteAllDialog }
-        setShowDialog={ setShowDeleteAllDialog }
-        modalTitle={ "DELETE ALL?" }
-      />
-
       <View style={ noteDateContainer }>
-        <Text style={ noteDate }>12 2023</Text>
+        <Text style={ noteDate }>{ note.month }</Text>
       </View>
 
       <View style={ notePreviewContainer }>
-        <TouchableOpacity
-          activeOpacity={ 0.75 }
-          onPress={ () => {
-            setShowDeleteAllDialog( true )
-          }}
-        >
-          <Image 
-            source={ require( "../../assets/icons/more.png" ) }
-            style={ noteMore }
-          />
-        </TouchableOpacity>
-
         <View style={ notePreview }>
-          <Text style={ notePreviewLabel }>2 Reminders</Text>
-          <Text style={ notePreviewLabel }>3 Finished</Text>
+          <Text style={ notePreviewLabel }>
+            { note.notePending > 0 ?
+              `${ note.notePending } ${ note.notePending > 1 ? 'Reminders' : 'Reminder' }`
+              :
+              `All is Well`
+            }
+          </Text>
+          <Text style={ notePreviewLabel }>
+            {
+              note.noteCompleted > 0 && note.notePending > 0 ?
+              `${ note.noteCompleted } ${ note.noteCompleted > 1 ? 'Reminders' : 'Reminder' } Completed`
+              : note.noteCompleted <= 0 && note.notePending > 0 ?
+              `Tick-tock-ding! Remember to do.`
+              :
+              `Your mind has been cleared`
+            }
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

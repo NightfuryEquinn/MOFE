@@ -1,3 +1,221 @@
 import moment from "moment"
 import realmDb from "../RealmDB"
 import uuid from "react-native-uuid"
+import { convertDateToDateFormat, convertTimeStringToDate, formatDateToDisplay, formatTimeToDisplay, isDateBetween } from "../../assets/utils/Formatter"
+
+interface Note {
+  _noteId: string,
+  title: string,
+  description: string,
+  startDate: string,
+  endDate: string,
+  startTime: string,
+  endTime: string,
+  isCompleted: boolean
+}
+
+interface NoteGroup {
+  month: string,
+  monthNote: Note[],
+  notePending: number,
+  noteCompleted: number
+}
+
+export const getNotes = (): NoteGroup[] => {
+  try {
+    const notes = realmDb.objects( 'Note' )
+    const noteArray = notes.map( note => ( { ...note } ) )
+    const noteGroup: any = {}
+
+    noteArray.forEach( note => {
+      const startDate = convertDateToDateFormat( note.startDate )
+      const endDate = convertDateToDateFormat( note.endDate )
+
+      for( let currentDate = startDate; currentDate <= endDate; currentDate.setDate( currentDate.getDate() + 1 ) ) {
+        const groupMonthYear: any = note.startDate
+        const key: string = formatDateToDisplay( groupMonthYear ).slice( -7 )
+  
+        let notePending: number = 0
+        let noteCompleted: number = 0
+  
+        if( !noteGroup[ key ] ) {
+          noteGroup[ key ] = { month: key, monthNote: [], notePending, noteCompleted }
+        }
+  
+        if( !note.isCompleted ) {
+          noteGroup[ key ].notePending += 1
+        } else {
+          noteGroup[ key ].noteCompleted += 1
+        }
+  
+        noteGroup[ key ].monthNote.push( note )
+      }
+    })
+
+    const sortedGetNotes: NoteGroup[] = sortNote( Object.values( noteGroup ) )
+
+    console.log( sortedGetNotes )
+
+    return sortedGetNotes
+  } catch ( err ) {
+    console.log( err )
+
+    return []
+  }
+}
+
+export const getFilteredNote = ( date: string ): NoteGroup[] => {
+  try {
+    const notes = realmDb.objects( 'Note' )
+    const noteArray = notes.map( note => ( { ...note } ) )
+    const noteGroup: any = {}
+
+    noteArray.forEach( note => {
+      const startDate = convertDateToDateFormat( note.startDate )
+      const endDate = convertDateToDateFormat( note.endDate )
+      const filterDate = new Date( date )
+
+      if( isDateBetween( filterDate, startDate, endDate ) ) {
+        const groupMonthYear: any = note.startDate
+        const key: string = formatDateToDisplay( groupMonthYear ).slice( -7 )
+
+        let notePending: number = 0
+        let noteCompleted: number = 0
+
+        if( !noteGroup[ key ] ) {
+          noteGroup[ key ] = { month: key, monthNote: [], notePending, noteCompleted }
+        }
+
+        if( !note.isCompleted ) {
+          noteGroup[ key ].notePending += 1
+        } else {
+          noteGroup[ key ].noteCompleted += 1
+        }
+
+        noteGroup[ key ].monthNote.push( note )
+      }
+    })
+
+    const filteredNote: NoteGroup[] = Object.values( noteGroup )
+
+    return filteredNote
+  } catch ( err ) {
+    console.log( err )
+
+    return []
+  }
+}
+
+export const insertNote = ( title: string, description: string, startDate: string, endDate: string, startTime: string, endTime: string ) => {
+  try {
+    realmDb.write( () => {
+      realmDb.create( 'Note', {
+        _noteId: uuid.v4(),
+        title: title,
+        description: description,
+        startDate: startDate,
+        endDate: endDate,
+        startTime: startTime,
+        endTime: endTime,
+        isCompleted: false
+      })
+    })
+  } catch ( err ) {
+    console.log( err )
+  }
+}
+
+export const updateNote = ( _noteId: string, title: string, description: string, startDate: string, endDate: string, startTime: string, endTime: string ) => {
+  const noteToUpdate = realmDb.objectForPrimaryKey( 'Note', _noteId )
+
+  try {
+    if( noteToUpdate ) {
+      realmDb.write( () => {
+        noteToUpdate.title = title;
+        noteToUpdate.description = description;
+        noteToUpdate.startDate = startDate;
+        noteToUpdate.endDate = endDate;
+        noteToUpdate.startTime = startTime;
+        noteToUpdate.endTime = endTime;
+      })
+    }
+  } catch ( err ) {
+    console.log( err )
+  }
+}
+
+export const completeNote = ( _noteId: string, isCompleted: boolean ) => {
+  const noteToUpdate = realmDb.objectForPrimaryKey( 'Note', _noteId )
+
+  try {
+    if( noteToUpdate ) {
+      realmDb.write( () => {
+        noteToUpdate.isCompleted = isCompleted
+      })
+    }
+  } catch ( err ) {
+    console.log( err )
+  }
+}
+
+export const deleteNote = ( _noteId: string ) => {
+  const noteToDelete = realmDb.objectForPrimaryKey( 'Note', _noteId )
+
+  try {
+    if( noteToDelete ) {
+      realmDb.write( () => {
+        realmDb.delete( noteToDelete )
+      })
+    }
+  } catch ( err ) {
+    console.log( err )
+  }
+}
+
+const sortNote = ( noteGroup: NoteGroup[] ): NoteGroup[] => {
+  try {
+    const sortedNoteGroup: NoteGroup[] = noteGroup.map( ( group ): NoteGroup => {
+      const sortedMonthNote = [ ...group.monthNote ].sort( ( note1: Note, note2: Note ) => {
+        const noteDate1 = formatDateToDisplay( note1.startDate )
+        const noteTime1 = formatTimeToDisplay( note1.startTime )
+        const noteDatetime1 = noteDate1 + " " + noteTime1
+
+        const noteDate2 = formatDateToDisplay( note2.startDate )
+        const noteTime2 = formatTimeToDisplay( note2.startTime )
+        const noteDatetime2 = noteDate2 + " " + noteTime2
+
+        const datetime1 = moment( noteDatetime1, "DD MM YYYY H:mma" ).toDate()
+        const datetime2 = moment( noteDatetime2, "DD MM YYYY H:mma" ).toDate()
+
+        if( datetime1 < datetime2 ) {
+          return -1
+        } else if( datetime1 > datetime2 ) {
+          return 1
+        } else {
+          return 0
+        }
+      })
+
+      return { ...group, monthNote: sortedMonthNote }
+    })
+
+    sortedNoteGroup.sort( ( group1: NoteGroup, group2: NoteGroup ) => {
+      const date1 = moment( group1.month, 'MM YYYY' ).toDate()
+      const date2 = moment( group2.month, 'MM YYYY' ).toDate()
+
+      if( date1 > date2 ) {
+        return -1
+      } else if( date1 < date2 ) {
+        return 1
+      } else {
+        return 0
+      }
+    })
+
+    return sortedNoteGroup
+  } catch ( err ) {
+    console.log( err )
+
+    return []
+  }
+}
