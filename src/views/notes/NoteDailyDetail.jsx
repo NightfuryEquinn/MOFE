@@ -65,7 +65,11 @@ const NoteDailyDetail = ( { route, navigation } ) => {
             <Text style={ bookmark }>E</Text>
           </View>
 
-          <CTAButtonList navigation={ navigation } manageViewName={ "NoteManage" } />
+          <CTAButtonList 
+            navigation={ navigation } 
+            isInDetail={ true }
+            manageViewName={ "NoteManage" } 
+          />
         </View>
       </View>
     </SafeAreaView>

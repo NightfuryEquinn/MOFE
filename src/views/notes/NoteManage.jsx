@@ -226,7 +226,7 @@ const NoteManage = ( { route, navigation } ) => {
                 if( details[ "_noteId" ] ) {
                   updateNote( details[ "_noteId" ], noteTitle, noteDesc, noteStartDate, noteEndDate, noteStartTime, noteEndTime )
                 } else { 
-                  insertNote( noteTitle, noteDesc, noteStartDate, noteEndDate, noteEndTime, noteEndTime)
+                  insertNote( noteTitle, noteDesc, noteStartDate, noteEndDate, noteStartTime, noteEndTime)
                 }
               }}
             />

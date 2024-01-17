@@ -1,7 +1,7 @@
 import moment from "moment"
 import realmDb from "../RealmDB"
 import uuid from "react-native-uuid"
-import { convertDateToDateFormat, convertTimeStringToDate, formatDateToDisplay, formatTimeToDisplay, isDateBetween } from "../../assets/utils/Formatter"
+import { convertDateToDateFormat, formatDateToDisplay, formatTimeToDisplay, isDateBetween } from "../../assets/utils/Formatter"
 
 interface Note {
   _noteId: string,
@@ -26,12 +26,18 @@ export const getNotes = (): NoteGroup[] => {
     const notes = realmDb.objects( 'Note' )
     const noteArray = notes.map( note => ( { ...note } ) )
     const noteGroup: any = {}
+    const seenNoteIds = new Set()
 
     noteArray.forEach( note => {
+      if( seenNoteIds.has( note._noteId ) ) {
+        return 
+      }
+
+      const currentDate = new Date()
       const startDate = convertDateToDateFormat( note.startDate )
       const endDate = convertDateToDateFormat( note.endDate )
 
-      for( let currentDate = startDate; currentDate <= endDate; currentDate.setDate( currentDate.getDate() + 1 ) ) {
+      if( isDateBetween( currentDate, startDate, endDate ) ) {
         const groupMonthYear: any = note.startDate
         const key: string = formatDateToDisplay( groupMonthYear ).slice( -7 )
   
@@ -50,6 +56,8 @@ export const getNotes = (): NoteGroup[] => {
   
         noteGroup[ key ].monthNote.push( note )
       }
+
+      seenNoteIds.add( note._noteId )
     })
 
     const sortedGetNotes: NoteGroup[] = sortNote( Object.values( noteGroup ) )
@@ -69,11 +77,16 @@ export const getFilteredNote = ( date: string ): NoteGroup[] => {
     const notes = realmDb.objects( 'Note' )
     const noteArray = notes.map( note => ( { ...note } ) )
     const noteGroup: any = {}
+    const seenNoteIds = new Set()
 
     noteArray.forEach( note => {
+      if( seenNoteIds.has( note._noteId ) ) {
+        return
+      }
+
       const startDate = convertDateToDateFormat( note.startDate )
       const endDate = convertDateToDateFormat( note.endDate )
-      const filterDate = new Date( date )
+      const filterDate = convertDateToDateFormat( date )
 
       if( isDateBetween( filterDate, startDate, endDate ) ) {
         const groupMonthYear: any = note.startDate
@@ -94,6 +107,8 @@ export const getFilteredNote = ( date: string ): NoteGroup[] => {
 
         noteGroup[ key ].monthNote.push( note )
       }
+
+      seenNoteIds.add( note._noteId )
     })
 
     const filteredNote: NoteGroup[] = Object.values( noteGroup )

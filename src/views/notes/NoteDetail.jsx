@@ -1,7 +1,7 @@
 import { Text, View } from "react-native"
 import { AppStyles } from "../../styles/AppStyles"
 import CTADetailButtonList from "../../shared/CTADetailButtonList"
-import { convertDateTimeToDateFormat } from "../../assets/utils/Formatter"
+import { calculateDays, convertDateTimeToDateFormat } from "../../assets/utils/Formatter"
 
 const NoteDetail = ( { noteDetails, navigation } ) => {
   const { title, description, startDate, endDate, startTime, endTime, isCompleted } = noteDetails 
@@ -32,7 +32,7 @@ const NoteDetail = ( { noteDetails, navigation } ) => {
         { !isCompleted && 
           <View style={ noteContentContainer }>
             <Text style={ noteDetail }>Timeline:</Text>
-            <Text style={ noteDetail }>1 day 1 hour</Text>
+            <Text style={ noteDetail }>{ `${ calculateDays( convertDateTimeToDateFormat( startDate, startTime ), convertDateTimeToDateFormat( endDate, endTime ) ) }` }</Text>
           </View>
         }
 

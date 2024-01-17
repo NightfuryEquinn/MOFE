@@ -48,12 +48,10 @@ export const convertDateToDateFormat = ( time: any ): Date => {
 
 export const convertDateTimeToDateFormat = ( date: any, time: any ): string => {
   if( date && time ) {
-    const [ years, months, days ] = time.split( ' ' ).map( ( str: string ) => parseInt( str ) )
+    const [ years, months, days ] = date.split( ' ' ).map( ( str: string ) => parseInt( str ) )
     const convertToString = years + '-' + months + '-' + days
   
     const convertToDate = new Date( convertToString )
-
-    console.log( convertToDate )
 
     const splitTime = time.match( /(\d+)H (\d+)M/ )
     const hours = parseInt( splitTime[ 1 ], 10 )
@@ -62,7 +60,7 @@ export const convertDateTimeToDateFormat = ( date: any, time: any ): string => {
     convertToDate.setHours( hours )
     convertToDate.setMinutes( minutes )
   
-    return convertToDate.toLocaleString()
+    return moment( convertToDate ).format( 'D MMM YYYY H:mma' )
   }
 
   return ""
@@ -110,4 +108,15 @@ export const calculateDuration = ( startTime: string, endTime: string ): string 
   const minutes = duration.minutes()
 
   return `${ hours } ${ hours > 1 ? 'hours': 'hour' } ${ minutes } ${ minutes > 1 ? 'minutes' : 'minute' }`
+}
+
+export const calculateDays = ( startDate: string, endDate: string ) => {
+  const startMoment = moment( startDate, 'D MMM YYYY H:mma' )
+  const endMoment = moment( endDate, 'D MMM YYYY H:mma' )
+
+  const daysDiff = endMoment.diff( startMoment, 'days' ) % 365
+  const hoursDiff = endMoment.diff( startMoment, 'hours' ) % 24
+  const minutesDiff = endMoment.diff( startMoment, 'minutes' ) % 60
+
+  return `${ daysDiff } ${ daysDiff > 1 ? 'days' : 'day' } ${ hoursDiff } ${ hoursDiff > 1 ? 'hours' : 'hour' } ${ minutesDiff } ${ minutesDiff > 1 ? 'minutes' : 'minute' }`
 }

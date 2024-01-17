@@ -68,7 +68,8 @@ const NoteMain = ( { navigation } ) => {
 
           <CTAButtonList 
             navigation={ navigation } 
-            manageViewName={ "NoteManage" } 
+            manageViewName={ "NoteManage" }
+            setFilterDate={ setFilterDate }
           />
         </View>
       </View>
