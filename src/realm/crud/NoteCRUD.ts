@@ -33,9 +33,9 @@ export const getNotes = (): NoteGroup[] => {
         return 
       }
 
-      const currentDate = new Date()
-      const startDate = convertDateToDateFormat( note.startDate )
-      const endDate = convertDateToDateFormat( note.endDate )
+      const currentDate: Date = moment( Date.now() ).toDate()
+      const startDate: Date = convertDateToDateFormat( note.startDate )
+      const endDate: Date = convertDateToDateFormat( note.endDate )
 
       if( isDateBetween( currentDate, startDate, endDate ) ) {
         const groupMonthYear: any = note.startDate
@@ -61,8 +61,6 @@ export const getNotes = (): NoteGroup[] => {
     })
 
     const sortedGetNotes: NoteGroup[] = sortNote( Object.values( noteGroup ) )
-
-    console.log( sortedGetNotes )
 
     return sortedGetNotes
   } catch ( err ) {

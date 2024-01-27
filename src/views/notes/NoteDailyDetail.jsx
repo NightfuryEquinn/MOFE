@@ -7,8 +7,6 @@ import CTAButtonList from "../../shared/CTAButtonList"
 const NoteDailyDetail = ( { route, navigation } ) => {
   const { details } = route.params
 
-  console.log( details )
-
   const {
     container,
     noteMainContainer,

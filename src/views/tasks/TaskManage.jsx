@@ -1,4 +1,4 @@
-import { Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
+import { Image, Keyboard, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { AppStyles } from "../../styles/AppStyles"
 import CTAButtonList from "../../shared/CTAButtonList"
@@ -66,6 +66,7 @@ const TaskManage = ( { route, navigation } ) => {
     taskInputHeader,
     taskInput,
     taskDescInput,
+    taskScrollContainer
   } = AppStyles
 
   return (
@@ -77,87 +78,89 @@ const TaskManage = ( { route, navigation } ) => {
               <Text style={ headerAlt }>{ func === 'add' ? 'ADD TASK' : 'EDIT TASK' }</Text>
             </View>
 
-            <KeyboardAvoidingView behavior="height" style={ taskManageContainer }>
-              <View style={ taskInputContainer }>
-                <Text style={ taskInputHeader }>Title</Text>
-                <TextInput
-                  placeholder="your title"
-                  placeholderTextColor={ colors.skyblue }
-                  style={ taskInput }
-                  onChangeText={ text => setTaskTitle( text ) }
-                  value={ taskTitle }
-                />
-              </View>
-              
-              <View style={ taskInputContainer }>
-                <Text style={ taskInputHeader }>Description</Text>
-                <TextInput
-                  multiline
-                  textAlignVertical="top"
-                  placeholder="your description"
-                  placeholderTextColor={ colors.skyblue }
-                  style={ [ taskInput, taskDescInput ] }
-                  onChangeText={ text => setTaskDesc( text ) }
-                  value={ taskDesc }
-                />
-              </View>
-
-              <View style={ taskInputContainer }>
-                <Text style={ taskInputHeader }>Date</Text>
-                <TouchableOpacity 
-                  activeOpacity={ 0.75 }
-                  onPress={ () => setShowDate( true ) }
-                >
+            <ScrollView showsVerticalScrollIndicator={ false } style={ taskScrollContainer }>              
+              <KeyboardAvoidingView behavior="height" style={ taskManageContainer }>
+                <View style={ taskInputContainer }>
+                  <Text style={ taskInputHeader }>Title</Text>
                   <TextInput
-                    editable={ false }
-                    placeholder="your task date"
+                    placeholder="your title"
                     placeholderTextColor={ colors.skyblue }
                     style={ taskInput }
-                    value={ taskDate }
+                    onChangeText={ text => setTaskTitle( text ) }
+                    value={ taskTitle }
                   />
-                </TouchableOpacity>
-              </View>
-
-              { taskDate ? 
+                </View>
+                
                 <View style={ taskInputContainer }>
-                  <Text style={ taskInputHeader }>Start Time</Text>
+                  <Text style={ taskInputHeader }>Description</Text>
+                  <TextInput
+                    multiline
+                    textAlignVertical="top"
+                    placeholder="your description"
+                    placeholderTextColor={ colors.skyblue }
+                    style={ [ taskInput, taskDescInput ] }
+                    onChangeText={ text => setTaskDesc( text ) }
+                    value={ taskDesc }
+                  />
+                </View>
+
+                <View style={ taskInputContainer }>
+                  <Text style={ taskInputHeader }>Date</Text>
                   <TouchableOpacity 
                     activeOpacity={ 0.75 }
-                    onPress={ () => setShowStart( true ) }
+                    onPress={ () => setShowDate( true ) }
                   >
                     <TextInput
                       editable={ false }
-                      placeholder="your start time"
+                      placeholder="your task date"
                       placeholderTextColor={ colors.skyblue }
                       style={ taskInput }
-                      value={ taskStart }
+                      value={ taskDate }
                     />
                   </TouchableOpacity>
                 </View>
-                :
-                null
-              }
 
-              { taskDate && taskStart ?
-                <View style={ taskInputContainer }>
-                  <Text style={ taskInputHeader }>End Time</Text>
-                  <TouchableOpacity 
-                    activeOpacity={ 0.75 }
-                    onPress={ () => setShowEnd( true ) }
-                  >
-                    <TextInput
-                      editable={ false }
-                      placeholder="your end time"
-                      placeholderTextColor={ colors.skyblue }
-                      style={ taskInput }
-                      value={ taskEnd }
-                    />
-                  </TouchableOpacity>
-                </View>
-                :
-                null
-              }
-            </KeyboardAvoidingView>
+                { taskDate ? 
+                  <View style={ taskInputContainer }>
+                    <Text style={ taskInputHeader }>Start Time</Text>
+                    <TouchableOpacity 
+                      activeOpacity={ 0.75 }
+                      onPress={ () => setShowStart( true ) }
+                    >
+                      <TextInput
+                        editable={ false }
+                        placeholder="your start time"
+                        placeholderTextColor={ colors.skyblue }
+                        style={ taskInput }
+                        value={ taskStart }
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  :
+                  null
+                }
+
+                { taskDate && taskStart ?
+                  <View style={ taskInputContainer }>
+                    <Text style={ taskInputHeader }>End Time</Text>
+                    <TouchableOpacity 
+                      activeOpacity={ 0.75 }
+                      onPress={ () => setShowEnd( true ) }
+                    >
+                      <TextInput
+                        editable={ false }
+                        placeholder="your end time"
+                        placeholderTextColor={ colors.skyblue }
+                        style={ taskInput }
+                        value={ taskEnd }
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  :
+                  null
+                }
+              </KeyboardAvoidingView>
+            </ScrollView>
 
             <Image
               source={ require( "../../assets/images/town.jpg" ) }

@@ -8,8 +8,6 @@ import { formatDateToDisplay } from "../../assets/utils/Formatter"
 const TaskDailyDetail = ( { route, navigation } ) => {
   const { details } = route.params
 
-  console.log( details )
-
   const {
     container,
     headerDividerAlt,

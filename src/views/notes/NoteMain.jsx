@@ -12,8 +12,6 @@ const NoteMain = ( { navigation } ) => {
 
   useEffect( () => {
     filterDate ? setNotes( getFilteredNote( filterDate ) ) : setNotes( getNotes() )
-
-    console.log( `All Notes -- ${ notes }` )
   }, [ filterDate ] )
 
   const {

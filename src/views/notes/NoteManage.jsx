@@ -1,4 +1,4 @@
-import { Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
+import { Image, Keyboard, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { AppStyles } from "../../styles/AppStyles"
 import CTAButtonList from "../../shared/CTAButtonList"
@@ -81,7 +81,8 @@ const NoteManage = ( { route, navigation } ) => {
     noteInputContainer,
     noteInputHeader,
     noteInput,
-    noteDescInput
+    noteDescInput,
+    noteScrollContainer
   } = AppStyles
 
   return (
@@ -93,107 +94,109 @@ const NoteManage = ( { route, navigation } ) => {
               <Text style={ headerAlt }>{ func === 'add' ? 'ADD NOTE' : 'EDIT NOTE' }</Text>
             </View>
 
-            <KeyboardAvoidingView behavior='height' style={ noteManageContainer }>
-              <View style={ noteInputContainer }>
-                <Text style={ noteInputHeader }>Title</Text>
-                <TextInput
-                  placeholder="your title"
-                  placeholderTextColor={ colors.skyblue }
-                  style={ noteInput }
-                  onChangeText={ text => setNoteTitle( text ) }
-                  value={ noteTitle }
-                />
-              </View>
-
-              <View style={ noteInputContainer }>
-                <Text style={ noteInputHeader }>Description</Text>
-                <TextInput
-                  multiline
-                  textAlignVertical="top"
-                  placeholder="your description"
-                  placeholderTextColor={ colors.skyblue }
-                  style={ [ noteInput, noteDescInput ] }
-                  onChangeText={ text => setNoteDesc( text ) }
-                  value={ noteDesc }
-                />
-              </View>
-
-              <View style={ noteInputContainer }>
-                <Text style={ noteInputHeader }>Start Date</Text>
-                <TouchableOpacity 
-                  activeOpacity={ 0.75 }
-                  onPress={ () => setShowStartDate( true ) }
-                >
+            <ScrollView showsVerticalScrollIndicator={ false } style={ noteScrollContainer }>
+              <KeyboardAvoidingView behavior='height' style={ noteManageContainer }>
+                <View style={ noteInputContainer }>
+                  <Text style={ noteInputHeader }>Title</Text>
                   <TextInput
-                    editable={ false }
-                    placeholder="your start date"
+                    placeholder="your title"
                     placeholderTextColor={ colors.skyblue }
                     style={ noteInput }
-                    value={ noteStartDate }
+                    onChangeText={ text => setNoteTitle( text ) }
+                    value={ noteTitle }
                   />
-                </TouchableOpacity>
-              </View>
+                </View>
 
-              { noteStartDate ?
                 <View style={ noteInputContainer }>
-                  <Text style={ noteInputHeader }>Start Time</Text>
+                  <Text style={ noteInputHeader }>Description</Text>
+                  <TextInput
+                    multiline
+                    textAlignVertical="top"
+                    placeholder="your description"
+                    placeholderTextColor={ colors.skyblue }
+                    style={ [ noteInput, noteDescInput ] }
+                    onChangeText={ text => setNoteDesc( text ) }
+                    value={ noteDesc }
+                  />
+                </View>
+
+                <View style={ noteInputContainer }>
+                  <Text style={ noteInputHeader }>Start Date</Text>
                   <TouchableOpacity 
                     activeOpacity={ 0.75 }
-                    onPress={ () => setShowStartTime( true ) }
+                    onPress={ () => setShowStartDate( true ) }
                   >
                     <TextInput
                       editable={ false }
-                      placeholder="your start time"
+                      placeholder="your start date"
                       placeholderTextColor={ colors.skyblue }
                       style={ noteInput }
-                      value={ noteStartTime }
+                      value={ noteStartDate }
                     />
                   </TouchableOpacity>
                 </View>
-                :
-                null 
-              }
 
-              { noteStartDate && noteStartTime ?
-                <View style={ noteInputContainer }>
-                  <Text style={ noteInputHeader }>End Date</Text>
-                  <TouchableOpacity 
-                    activeOpacity={ 0.75 }
-                    onPress={ () => setShowEndDate( true ) }
-                  >
-                    <TextInput
-                      editable={ false }
-                      placeholder="your end date"
-                      placeholderTextColor={ colors.skyblue }
-                      style={ noteInput }
-                      value={ noteEndDate }
-                    />
-                  </TouchableOpacity>
-                </View>
-                :
-                null
-              }
+                { noteStartDate ?
+                  <View style={ noteInputContainer }>
+                    <Text style={ noteInputHeader }>Start Time</Text>
+                    <TouchableOpacity 
+                      activeOpacity={ 0.75 }
+                      onPress={ () => setShowStartTime( true ) }
+                    >
+                      <TextInput
+                        editable={ false }
+                        placeholder="your start time"
+                        placeholderTextColor={ colors.skyblue }
+                        style={ noteInput }
+                        value={ noteStartTime }
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  :
+                  null 
+                }
 
-              { noteStartDate && noteStartTime && noteEndDate ?
-                <View style={ noteInputContainer }>
-                  <Text style={ noteInputHeader }>End Time</Text>
-                  <TouchableOpacity 
-                    activeOpacity={ 0.75 }
-                    onPress={ () => setShowEndTime( true ) }
-                  >
-                    <TextInput
-                      editable={ false }
-                      placeholder="your end time"
-                      placeholderTextColor={ colors.skyblue }
-                      style={ noteInput }
-                      value={ noteEndTime }
-                    />
-                  </TouchableOpacity>
-                </View>
-                :
-                null
-              }
-            </KeyboardAvoidingView>
+                { noteStartDate && noteStartTime ?
+                  <View style={ noteInputContainer }>
+                    <Text style={ noteInputHeader }>End Date</Text>
+                    <TouchableOpacity 
+                      activeOpacity={ 0.75 }
+                      onPress={ () => setShowEndDate( true ) }
+                    >
+                      <TextInput
+                        editable={ false }
+                        placeholder="your end date"
+                        placeholderTextColor={ colors.skyblue }
+                        style={ noteInput }
+                        value={ noteEndDate }
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  :
+                  null
+                }
+
+                { noteStartDate && noteStartTime && noteEndDate ?
+                  <View style={ noteInputContainer }>
+                    <Text style={ noteInputHeader }>End Time</Text>
+                    <TouchableOpacity 
+                      activeOpacity={ 0.75 }
+                      onPress={ () => setShowEndTime( true ) }
+                    >
+                      <TextInput
+                        editable={ false }
+                        placeholder="your end time"
+                        placeholderTextColor={ colors.skyblue }
+                        style={ noteInput }
+                        value={ noteEndTime }
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  :
+                  null
+                }
+              </KeyboardAvoidingView>
+            </ScrollView>
 
             <Image
               source={ require( "../../assets/images/cliff.jpg" ) }

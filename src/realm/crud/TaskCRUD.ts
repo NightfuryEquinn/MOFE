@@ -139,6 +139,7 @@ export const completeTask = ( _taskId: string, isCompleted: boolean ) => {
 }
 
 export const deleteTask = ( _taskId: string ) => {
+  console.log(_taskId)
   const taskToDelete = realmDb.objectForPrimaryKey( 'Task', _taskId )
 
   try {

@@ -1,4 +1,4 @@
-import { Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
+import { Keyboard, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 import { AppStyles } from "../../styles/AppStyles"
 import { SafeAreaView } from "react-native-safe-area-context"
 import CTAButtonList from "../../shared/CTAButtonList"
@@ -35,28 +35,19 @@ const LogManage = ( { route, navigation } ) => {
               <Text style={ logManageTitle }>{ func === 'add' ? moment( Date.now() ).format( 'DD MM YYYY' ) : details[ 2 ] }</Text>
             </View>
             
-            <KeyboardAvoidingView behavior="height" style={ logContentContainer }>
-              <TextInput
-                multiline
-                textAlignVertical="top"
-                placeholder="write your daily log..."
-                placeholderTextColor={ colors.greyblue }
-                style={ logTextarea }
-                onChangeText={ text => setLogText( text ) }
-                value={ logText }
-              />
-            </KeyboardAvoidingView>
-
-            <Image
-              source={ require( "../../assets/images/seaside.jpg" ) }
-              style={{ 
-                width: 'fit-content', 
-                height: 120,
-                resizeMode: 'cover',
-                borderTopLeftRadius: 20,
-                borderBottomRightRadius: 20
-              }}
-            />          
+            <ScrollView showsVerticalScrollIndicator={ false } style={ logContentContainer }>
+              <KeyboardAvoidingView behavior="height" style={ logContentContainer }>
+                <TextInput
+                  multiline
+                  textAlignVertical="top"
+                  placeholder="write your daily log..."
+                  placeholderTextColor={ colors.greyblue }
+                  style={ logTextarea }
+                  onChangeText={ text => setLogText( text ) }
+                  value={ logText }
+                />
+              </KeyboardAvoidingView>   
+            </ScrollView>
           </View>
 
           <View style={ logMainRight }>

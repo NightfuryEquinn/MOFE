@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Image, ScrollView, Text, View } from "react-native"
 import CTAButtonList from "../../shared/CTAButtonList"
 import LogDaily from "./LogDaily"
-import { getFilteredLog, getLogs } from "../../realm/crud/LogCRUD"
+import { getFilteredLog, getLogToday, getLogs } from "../../realm/crud/LogCRUD"
 
 const LogMain = ( { navigation } ) => {
   const [ logs, setLogs ] = useState( [] )
@@ -77,6 +77,7 @@ const LogMain = ( { navigation } ) => {
           <CTAButtonList 
             navigation={ navigation } 
             manageViewName={ "LogManage" }
+            hasLogToday={ getLogToday() }
             setFilterDate={ setFilterDate }
           />
         </View>

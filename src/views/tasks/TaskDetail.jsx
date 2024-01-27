@@ -48,7 +48,7 @@ const TaskDetail = ( { taskDetails, navigation } ) => {
         <CTADetailButtonList 
           navigation={ navigation } 
           isCompleted={ isCompleted } 
-          manageViewName={ "TaskManage" }
+          manageViewName={ "taskManage" }
           details={ taskDetails }
         />
       </View>

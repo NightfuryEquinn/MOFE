@@ -419,6 +419,9 @@ export const AppStyles = StyleSheet.create({
     color: colors.white,
     marginRight: 10,
   },
+  taskScrollContainer: {
+    flex: 1
+  },
   taskContentContainer: {
     paddingTop: 10
   },
@@ -427,6 +430,9 @@ export const AppStyles = StyleSheet.create({
     fontFamily: 'Kronshtadt',
     fontSize: 14,
     color: colors.deepblue
+  },
+  noteScrollContainer: {
+    flex: 1
   },
   noteContentContainer: {
     paddingTop: 10
@@ -530,11 +536,10 @@ export const AppStyles = StyleSheet.create({
   },
   logContentContainer: {
     flex: 1,
-    marginBottom: 20,
   },
   logTextarea: {
     padding: 15,
-    height: 300,
+    flex: 1,
     backgroundColor: colors.deepblue,
   },
   furyContainer: {

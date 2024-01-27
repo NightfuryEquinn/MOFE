@@ -1,6 +1,7 @@
 import moment from "moment"
 
 export const isDateBetween = ( target: Date, start: Date, end: Date ): boolean => {
+  end.setHours( 23, 59, 59, 0 )
   return target >= start && target <= end
 }
 

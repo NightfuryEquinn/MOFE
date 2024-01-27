@@ -12,8 +12,6 @@ const TaskMain = ( { navigation } ) => {
 
   useEffect( () => {
     filterDate ? setTasks( getFilteredTask( filterDate ) ) : setTasks( getTasks() )
-
-    console.log( `All Tasks -- ${ tasks }` )
   }, [ filterDate ] )
 
   const {

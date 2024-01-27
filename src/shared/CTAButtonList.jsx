@@ -85,7 +85,7 @@ const CTAButtonList = ( {
         null
       }
 
-      { !isAddEdit && (( hasLogToday && manageViewName === "LogManage" ) || ( manageViewName === "TaskManage" ) || ( manageViewName === "NoteManage" )) ? 
+      { !isAddEdit && (( !hasLogToday && manageViewName === "LogManage" ) || ( manageViewName === "TaskManage" ) || ( manageViewName === "NoteManage" )) ? 
         <TouchableOpacity
           activeOpacity={ 0.75 }
           onPress={ () => {
