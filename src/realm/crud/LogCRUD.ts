@@ -57,7 +57,9 @@ export const getLogToday = (): boolean => {
 export const getFilteredLog = ( date: string ): LogGroup[] => {
   try {
     // Create default empty log
-    insertDefaultLog( date )
+    if( !getLogExist( date ) ) {
+      insertDefaultLog( date )
+    }
 
     const logs = realmDb.objects( 'Log' ).filtered( "date == $0", date )
     const logArray = logs.map( log => ( { ...log } ) )
@@ -177,5 +179,18 @@ const sortLog = ( logGroup: LogGroup[] ): LogGroup[] => {
     console.log( err )
 
     return []
+  }
+}
+
+const getLogExist = ( date: string ): boolean => {
+  try {
+    const logs = realmDb.objects( 'Log' ).filtered( "date == $0", date )
+    const logArray = logs.map( log => ( { ...log } ) )
+
+    return logArray.length > 0
+  } catch ( err ) {
+    console.log( err )
+
+    return false
   }
 }
