@@ -1,6 +1,7 @@
 import moment from "moment"
-import realmDb from "../RealmDB"
 import uuid from "react-native-uuid"
+
+import realmDb from "../RealmDB"
 import { convertTimeStringToMinutes } from "../../assets/utils/Formatter"
 
 interface Task {

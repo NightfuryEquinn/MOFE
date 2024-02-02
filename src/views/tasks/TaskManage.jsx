@@ -1,10 +1,11 @@
 import { Image, Keyboard, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
+import { useState } from "react"
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { SafeAreaView } from "react-native-safe-area-context"
+
 import { AppStyles } from "../../styles/AppStyles"
 import CTAButtonList from "../../shared/CTAButtonList"
-import { useState } from "react"
 import { colors } from "../../assets/colors/Colors"
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { insertTask, updateTask } from "../../realm/crud/TaskCRUD"
 import { convertDateToString, convertTimeStringToDate } from "../../assets/utils/Formatter"
 

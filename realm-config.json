@@ -1,9 +1,9 @@
 {
-  "appId": "",
-  "appUrl": "",
-  "baseUrl": "",
-  "clientApiBaseUrl": "",
-  "dataApiBaseUrl": "",
-  "dataExplorerLink": "",
-  "dataSourceName": ""
+  "appId": "mofe-0114-byuaq",
+  "appUrl": "https://realm.mongodb.com/groups/65bb0f84ea535536d593e367/apps/65bc4a9862a27a5cea607a9c",
+  "baseUrl": "https://realm.mongodb.com",
+  "clientApiBaseUrl": "https://ap-southeast-1.aws.realm.mongodb.com",
+  "dataApiBaseUrl": "https://ap-southeast-1.aws.data.mongodb-api.com",
+  "dataExplorerLink": "https://cloud.mongodb.com/links/65bb0f84ea535536d593e367/explorer/AtlasCluster/database/collection/find",
+  "dataSourceName": "mongodb-atlas"
 }

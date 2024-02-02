@@ -1,4 +1,5 @@
 import { Text, View } from "react-native"
+
 import { AppStyles } from "../../styles/AppStyles"
 import CTADetailButtonList from "../../shared/CTADetailButtonList"
 import { calculateDays, convertDateTimeToDateFormat } from "../../assets/utils/Formatter"

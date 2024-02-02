@@ -1,7 +1,8 @@
+import { useState } from "react"
 import { View, TouchableOpacity, Image } from "react-native"
+
 import { AppStyles } from "../styles/AppStyles"
 import PopupModal from "./PopupModal"
-import { useState } from "react"
 import { completeTask, deleteTask } from "../realm/crud/TaskCRUD"
 import { completeNote, deleteNote } from "../realm/crud/NoteCRUD"
 

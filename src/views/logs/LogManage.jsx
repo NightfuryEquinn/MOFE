@@ -1,11 +1,12 @@
-import { Keyboard, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
-import { AppStyles } from "../../styles/AppStyles"
+import { Keyboard, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableWithoutFeedback, View } from "react-native"
+import moment from "moment"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { useState } from "react"
+
 import CTAButtonList from "../../shared/CTAButtonList"
 import { colors } from "../../assets/colors/Colors"
-import { useState } from "react"
 import { getLogToday, insertLog, updateLog } from "../../realm/crud/LogCRUD"
-import moment from "moment"
+import { AppStyles } from "../../styles/AppStyles"
 
 const LogManage = ( { route, navigation } ) => {
   const { func, details } = route.params

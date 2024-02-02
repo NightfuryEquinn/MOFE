@@ -1,7 +1,8 @@
-import { Image, Text, TouchableOpacity, View, Dimensions } from "react-native"
-import { AppStyles } from "../../styles/AppStyles"
+import { Image, Text, TouchableOpacity, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useState } from "react"
+
+import { AppStyles } from "../../styles/AppStyles"
 
 const FuryMain = ( { navigation } ) => {
   const [ taps, setTaps ] = useState( 0 )

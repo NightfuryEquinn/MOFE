@@ -1,13 +1,14 @@
 import { NavigationContainer } from "@react-navigation/native"
-import TaskMain from "./views/tasks/TaskMain"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+
+import { AppStyles } from "./styles/AppStyles"
 import Home from "./Home"
 import TaskDailyDetail from "./views/tasks/TaskDailyDetail"
 import TaskManage from "./views/tasks/TaskManage"
-import { AppStyles } from "./styles/AppStyles"
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import LogMain from "./views/logs/LogMain"
 import LogManage from "./views/logs/LogManage"
+import TaskMain from "./views/tasks/TaskMain"
 import NoteMain from "./views/notes/NoteMain"
 import NoteDailyDetail from "./views/notes/NoteDailyDetail"
 import NoteManage from "./views/notes/NoteManage"

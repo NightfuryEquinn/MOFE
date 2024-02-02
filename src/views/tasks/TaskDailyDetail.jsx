@@ -1,7 +1,8 @@
 import { Image, ScrollView, Text, View } from "react-native"
-import { AppStyles } from "../../styles/AppStyles"
 import { SafeAreaView } from "react-native-safe-area-context"
+
 import CTAButtonList from "../../shared/CTAButtonList"
+import { AppStyles } from "../../styles/AppStyles"
 import TaskDetail from "./TaskDetail"
 import { formatDateToDisplay } from "../../assets/utils/Formatter"
 

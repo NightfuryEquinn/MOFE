@@ -1,8 +1,9 @@
 import { View, TouchableOpacity, Image } from "react-native"
-import { AppStyles } from "../styles/AppStyles"
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useState } from "react";
 import moment from "moment";
+
+import { AppStyles } from "../styles/AppStyles"
 import { convertDateToString } from "../assets/utils/Formatter";
 
 const CTAButtonList = ( { 

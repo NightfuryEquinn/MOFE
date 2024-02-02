@@ -1,8 +1,9 @@
 import { SafeAreaView } from "react-native-safe-area-context"
-import { AppStyles } from "../../styles/AppStyles"
 import { useEffect, useState } from "react"
 import { Image, ScrollView, Text, View } from "react-native"
+
 import CTAButtonList from "../../shared/CTAButtonList"
+import { AppStyles } from "../../styles/AppStyles"
 import LogDaily from "./LogDaily"
 import { getFilteredLog, getLogToday, getLogs } from "../../realm/crud/LogCRUD"
 

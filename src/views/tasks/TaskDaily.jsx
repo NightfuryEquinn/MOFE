@@ -1,4 +1,5 @@
 import { Text, TouchableOpacity, View } from "react-native"
+
 import { AppStyles } from "../../styles/AppStyles"
 import { formatDateToDisplay } from "../../assets/utils/Formatter"
 

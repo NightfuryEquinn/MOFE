@@ -1,4 +1,5 @@
 import { Text, TouchableOpacity } from "react-native"
+
 import { AppStyles } from "../../styles/AppStyles"
 
 const LogDaily = ( { log, navigation, isCompleted } ) => {

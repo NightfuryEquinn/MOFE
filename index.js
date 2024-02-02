@@ -1,27 +1,33 @@
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
 import { AppProvider, RealmProvider, UserProvider } from '@realm/react';
-import Home from './src/App';
-import realmDb from './src/realm/RealmDB';
+
 import { appId, baseUrl } from './realm-config.json';
+import { TaskSchema } from "./models/TaskSchema";
+import { LogSchema } from "./models/LogSchema";
+import { NoteSchema } from "./models/NoteSchema";
+
+import Home from './src/App';
+import WelcomeView from './src/views/WelcomeView';
+import LoadingView from './src/views/LoadingView';
 
 const AppRoot = () => (
-  // <AppProvider id={ appId } baseUrl={ baseUrl }>
-  //   <UserProvider fallback={ null }>
+  <AppProvider id={ appId } baseUrl={ baseUrl }>
+    <UserProvider fallback={ WelcomeView }>
       <RealmProvider
-        // schema={[ realmDb ]}
-        // sync={{
-        //   flexible: true,
-        //   onError: ( _session, error ) => {
-        //     console.log( `Realm Error: ${ error }` )
-        //   }
-        // }}
-        // fallback={ null }
+        schema={ [ LogSchema, NoteSchema, TaskSchema ] }
+        sync={{
+          flexible: true,
+          onError: ( _session, error ) => {
+            console.log( `Realm Error: ${ error }` )
+          }
+        }}
+        fallback={ LoadingView }
       >
         <Home />
       </RealmProvider>
-  //   </UserProvider>
-  // </AppProvider>
+    </UserProvider>
+  </AppProvider>
 )
 
 AppRegistry.registerComponent( appName, () => AppRoot );

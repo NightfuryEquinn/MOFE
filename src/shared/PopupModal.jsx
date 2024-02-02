@@ -1,6 +1,7 @@
 import { Text, TouchableOpacity, View } from "react-native"
-import { AppStyles } from "../styles/AppStyles"
 import Modal from "react-native-modal"
+
+import { AppStyles } from "../styles/AppStyles"
 import { colors } from "../assets/colors/Colors"
 
 const PopupModal = ( { 

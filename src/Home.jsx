@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { View, Text, TouchableOpacity, Image } from "react-native"
-import { AppStyles } from "./styles/AppStyles"
-import SplashScreen from 'react-native-lottie-splash-screen'
-import moment from "moment"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { quotes } from "./assets/utils/Quotes"
 import { useIsFocused } from "@react-navigation/native"
+import { View, Text, TouchableOpacity, Image } from "react-native"
+import moment from "moment"
+import SplashScreen from 'react-native-lottie-splash-screen'
+import { SafeAreaView } from "react-native-safe-area-context"
+
+import { quotes } from "./assets/utils/Quotes"
+import { AppStyles } from "./styles/AppStyles"
 
 const Home = ( { navigation } ) => {
   const isFocused = useIsFocused()
