@@ -2,7 +2,8 @@ import moment from "moment"
 import uuid from "react-native-uuid"
 
 import realmDb from "../RealmDB"
-import { convertDateToDateFormat, formatDateToDisplay, formatTimeToDisplay, isDateBetween } from "../../assets/utils/Formatter"
+import { convertDateTimeToDate, convertDateToDateFormat, formatDateToDisplay, formatTimeToDisplay, isDateBetween } from "../../assets/utils/Formatter"
+import Notifications from "../../Notifications"
 
 interface Note {
   _noteId: string,
@@ -122,9 +123,12 @@ export const getFilteredNote = ( date: string ): NoteGroup[] => {
 
 export const insertNote = ( title: string, description: string, startDate: string, endDate: string, startTime: string, endTime: string ) => {
   try {
+    const _notificationId = uuid.v4()
+
     realmDb.write( () => {
       realmDb.create( 'Note', {
         _noteId: uuid.v4(),
+        _noteNotificationId: _notificationId,
         title: title,
         description: description,
         startDate: startDate,
@@ -134,12 +138,14 @@ export const insertNote = ( title: string, description: string, startDate: strin
         isCompleted: false
       })
     })
+
+    Notifications.scheduleNotification( _notificationId, title, description, convertDateTimeToDate( startDate, startTime ) )
   } catch ( err ) {
     console.log( err )
   }
 }
 
-export const updateNote = ( _noteId: string, title: string, description: string, startDate: string, endDate: string, startTime: string, endTime: string ) => {
+export const updateNote = ( _noteId: string, _notificationId: string, title: string, description: string, startDate: string, endDate: string, startTime: string, endTime: string ) => {
   const noteToUpdate = realmDb.objectForPrimaryKey( 'Note', _noteId )
 
   try {
@@ -172,7 +178,7 @@ export const completeNote = ( _noteId: string, isCompleted: boolean ) => {
   }
 }
 
-export const deleteNote = ( _noteId: string ) => {
+export const deleteNote = ( _noteId: string, _notificationId: string ) => {
   const noteToDelete = realmDb.objectForPrimaryKey( 'Note', _noteId )
 
   try {

@@ -5,6 +5,7 @@ const TaskSchema: Realm.ObjectSchema = {
   primaryKey: "_taskId",
   properties: {
     _taskId: { type: 'string', indexed: true, default: uuid.v4() },
+    _taskNotificationId: { type: 'string', default: uuid.v4() },
     title: { type: 'string', default: null },
     description: { type: 'string', default: null },
     date: { type: 'string', default: null },

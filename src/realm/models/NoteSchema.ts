@@ -5,6 +5,7 @@ const NoteSchema: Realm.ObjectSchema = {
   primaryKey: '_noteId',
   properties: {
     _noteId: { type: 'string', indexed: true, default: uuid.v4() },
+    _noteNotificationId: { type: 'string', default: uuid.v4() },
     title: { type: 'string', default: null },
     description: { type: 'string', default: null },
     startDate: { type: 'string', default: null },

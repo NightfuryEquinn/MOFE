@@ -228,7 +228,7 @@ const NoteManage = ( { route, navigation } ) => {
               hasEmptyField={ noteTitle && noteDesc && noteStartDate && noteStartTime && noteEndDate && noteEndTime && ( new Date( `${ startDate }` ).setHours( startTime.getHours(), startTime.getMinutes() ) < new Date( `${ endDate }` ).setHours( endTime.getHours(), endTime.getMinutes() ) ) }
               manageData={ () => {
                 if( details[ "_noteId" ] ) {
-                  updateNote( details[ "_noteId" ], noteTitle, noteDesc, noteStartDate, noteEndDate, noteStartTime, noteEndTime )
+                  updateNote( details[ "_noteId" ], details[ "_noteNotificationId" ], noteTitle, noteDesc, noteStartDate, noteEndDate, noteStartTime, noteEndTime )
                 } else { 
                   insertNote( noteTitle, noteDesc, noteStartDate, noteEndDate, noteStartTime, noteEndTime)
                 }

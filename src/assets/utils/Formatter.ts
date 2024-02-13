@@ -1,4 +1,4 @@
-import moment from "moment"
+import moment from 'moment-timezone';
 
 export const isDateBetween = ( target: Date, start: Date, end: Date ): boolean => {
   end.setHours( 23, 59, 59, 0 )
@@ -67,6 +67,24 @@ export const convertDateTimeToDateFormat = ( date: any, time: any ): string => {
   return ""
 }
 
+export const convertDateTimeToDate = ( date: any, time: any ) => {
+  if( date && time ) {
+    const [ years, months, days ] = date.split( ' ' ).map( ( str: string ) => parseInt( str ) )
+    const convertToString = years + '-' + months + '-' + days
+  
+    const convertToDate = new Date( convertToString )
+
+    const splitTime = time.match( /(\d+)H (\d+)M/ )
+    const hours = parseInt( splitTime[ 1 ], 10 )
+    const minutes = parseInt( splitTime[ 2 ], 10 )
+
+    convertToDate.setHours( hours )
+    convertToDate.setMinutes( minutes )
+  
+    return convertToDate
+  }
+}
+
 export const formatDateToDisplay = ( time: string ): string => {
   const [ years, months, days ] = time.split( ' ' ).map( str => parseInt( str ) )
   const convertToString = years + '-' + months + '-' + days
@@ -120,4 +138,24 @@ export const calculateDays = ( startDate: string, endDate: string ) => {
   const minutesDiff = endMoment.diff( startMoment, 'minutes' ) % 60
 
   return `${ daysDiff } ${ daysDiff > 1 ? 'days' : 'day' } ${ hoursDiff } ${ hoursDiff > 1 ? 'hours' : 'hour' } ${ minutesDiff } ${ minutesDiff > 1 ? 'minutes' : 'minute' }`
+}
+
+const convertDateTimeFormat = ( date: any, time: any ): string => {
+  if( date && time ) {
+    const [ years, months, days ] = date.split( ' ' ).map( ( str: string ) => parseInt( str ) )
+    const convertToString = years + '-' + months + '-' + days
+  
+    const convertToDate = new Date( convertToString )
+
+    const splitTime = time.match( /(\d+)H (\d+)M/ )
+    const hours = parseInt( splitTime[ 1 ], 10 )
+    const minutes = parseInt( splitTime[ 2 ], 10 )
+
+    convertToDate.setHours( hours )
+    convertToDate.setMinutes( minutes )
+  
+    return moment( convertToDate ).format( 'YYYY-MM-dd HH:mm' )
+  }
+
+  return ""
 }
