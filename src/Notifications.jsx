@@ -27,29 +27,26 @@ class Notifications {
       popInitialNotification: true,
       requestPermissions: true
     })
-  
-    PushNotification.createChannel(
-      {
-        channelId: 'mofe-notifications',
-        channelName: 'MOFE Notifications',
-        channelDescription: 'Notifications from MOFE',
-      },
-      () => {}
-    )
-  
-    PushNotification.getScheduledLocalNotifications( rn => {
-      console.log( 'Scheduled Notifications:', rn )
+  }
+
+  scheduleNotification( id, title, date ) {
+    PushNotification.localNotificationSchedule({
+      channelId: 'MOFE PUSH',
+      title: title,
+      message: "😗 Remember to do...",
+      date: date,
+      id: id,
+      allowWhileIdle: true
     })
   }
 
-  scheduleNotification( id, title, desc, date ) {
-    PushNotification.localNotificationSchedule({
-      channelId: 'mofe-notifications',
-      title: title,
-      message: desc,
-      date: date,
-      id: id
-    })
+  cancelNotification( id ) {
+    PushNotification.cancelLocalNotification( id )
+  }
+
+  rescheduleNotification( id, title, date ) {
+    this.cancelNotification( id )
+    this.scheduleNotification( id, title, date )
   }
 }
 

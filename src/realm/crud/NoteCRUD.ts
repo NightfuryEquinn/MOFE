@@ -139,7 +139,11 @@ export const insertNote = ( title: string, description: string, startDate: strin
       })
     })
 
-    Notifications.scheduleNotification( _notificationId, title, description, convertDateTimeToDate( startDate, startTime ) )
+    Notifications.scheduleNotification( 
+      _notificationId, 
+      title,
+      convertDateTimeToDate( startDate, startTime ) 
+    )
   } catch ( err ) {
     console.log( err )
   }
@@ -159,6 +163,12 @@ export const updateNote = ( _noteId: string, _notificationId: string, title: str
         noteToUpdate.endTime = endTime;
       })
     }
+
+    Notifications.rescheduleNotification( 
+      _notificationId, 
+      title,
+      convertDateTimeToDate( startDate, startTime ) 
+    )
   } catch ( err ) {
     console.log( err )
   }
@@ -187,6 +197,8 @@ export const deleteNote = ( _noteId: string, _notificationId: string ) => {
         realmDb.delete( noteToDelete )
       })
     }
+
+    Notifications.cancelNotification( _notificationId )
   } catch ( err ) {
     console.log( err )
   }

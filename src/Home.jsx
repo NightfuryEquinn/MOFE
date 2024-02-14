@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native"
 import moment from "moment"
 import SplashScreen from 'react-native-lottie-splash-screen'
 import { SafeAreaView } from "react-native-safe-area-context"
+import PushNotification, { Importance } from 'react-native-push-notification';
 
 import { quotes } from "./assets/utils/Quotes"
 import { AppStyles } from "./styles/AppStyles"
@@ -35,6 +36,25 @@ const Home = ( { navigation } ) => {
 
     setTimeout( randomQuote, 500 )
     setInterval( realTime, 1000 )
+
+    PushNotification.channelExists( 'MOFE PUSH', function ( exists ) {
+      if( !exists ) {
+        PushNotification.createChannel(
+          {
+            channelId: 'MOFE PUSH',
+            channelName: 'MOFE Notifications',
+            channelDescription: 'Notifications from MOFE',
+            soundName: './assets/audios/alert.mp3',
+            importance: Importance.HIGH,
+          },
+          ( created ) => console.log( `Channel Created: ${ created }`)
+        )
+      }
+    })
+
+    PushNotification.getScheduledLocalNotifications( rn => {
+      console.log( 'Scheduled Notifications:', rn )
+    })
   }, [ isFocused ] )
 
   const { 

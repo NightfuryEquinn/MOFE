@@ -70,17 +70,20 @@ export const convertDateTimeToDateFormat = ( date: any, time: any ): string => {
 export const convertDateTimeToDate = ( date: any, time: any ) => {
   if( date && time ) {
     const [ years, months, days ] = date.split( ' ' ).map( ( str: string ) => parseInt( str ) )
-    const convertToString = years + '-' + months + '-' + days
-  
-    const convertToDate = new Date( convertToString )
 
     const splitTime = time.match( /(\d+)H (\d+)M/ )
     const hours = parseInt( splitTime[ 1 ], 10 )
     const minutes = parseInt( splitTime[ 2 ], 10 )
 
+    const convertToDate = new Date()
+    convertToDate.setFullYear( years )
+    convertToDate.setMonth( months - 1 )
+    convertToDate.setDate( days )
     convertToDate.setHours( hours )
     convertToDate.setMinutes( minutes )
-  
+
+    console.log( convertToDate )
+
     return convertToDate
   }
 }
@@ -138,24 +141,4 @@ export const calculateDays = ( startDate: string, endDate: string ) => {
   const minutesDiff = endMoment.diff( startMoment, 'minutes' ) % 60
 
   return `${ daysDiff } ${ daysDiff > 1 ? 'days' : 'day' } ${ hoursDiff } ${ hoursDiff > 1 ? 'hours' : 'hour' } ${ minutesDiff } ${ minutesDiff > 1 ? 'minutes' : 'minute' }`
-}
-
-const convertDateTimeFormat = ( date: any, time: any ): string => {
-  if( date && time ) {
-    const [ years, months, days ] = date.split( ' ' ).map( ( str: string ) => parseInt( str ) )
-    const convertToString = years + '-' + months + '-' + days
-  
-    const convertToDate = new Date( convertToString )
-
-    const splitTime = time.match( /(\d+)H (\d+)M/ )
-    const hours = parseInt( splitTime[ 1 ], 10 )
-    const minutes = parseInt( splitTime[ 2 ], 10 )
-
-    convertToDate.setHours( hours )
-    convertToDate.setMinutes( minutes )
-  
-    return moment( convertToDate ).format( 'YYYY-MM-dd HH:mm' )
-  }
-
-  return ""
 }
