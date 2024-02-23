@@ -1,53 +1,62 @@
 import PushNotification from 'react-native-push-notification';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
-class Notifications {
-  constructor() {
-    PushNotification.configure({
-      onRegister: function ( token ) {
-        console.log( "TOKEN:", token )
-      },
-      onNotification: function ( notification ) {
-        console.log( "NOTIFICATION:", notification )
-    
-        notification.finish( PushNotificationIOS.FetchResult.NoData )
-      },
-      onAction: function ( notification ) {
-        console.log( "ACTION:", notification.action )
-        console.log( "NOTIFICATION:", notification )
-      },
-      onRegistrationError: function ( err ) {
-        console.error( err.message, err )
-      },
-      permissions: {
-        alert: true,
-        badge: true,
-        sound: true
-      },
-      popInitialNotification: true,
-      requestPermissions: true
+const Notifications = () => {
+  const createNotificationChannel = () => {
+    PushNotification.channelExists( 'MOFE PUSH', function ( exists ) {
+      if( !exists ) {
+        PushNotification.createChannel(
+          {
+            channelId: 'MOFE PUSH',
+            channelName: 'MOFE Scheduled Notifications',
+            channelDescription: 'Scheduled Notifications from MOFE',
+          },
+          ( created ) => {
+            if( created ) {
+              console.log( `Channel Created: ${ created }`)
+            } else {
+              console.log( 'Failed to create channel' )
+            }
+          }
+        )
+      }
     })
   }
 
-  scheduleNotification( id, title, date ) {
-    PushNotification.localNotificationSchedule({
-      channelId: 'MOFE PUSH',
-      title: title,
-      message: "😗 Remember to do...",
-      date: date,
-      id: id,
-      allowWhileIdle: true
-    })
+  const scheduleNotification = ( id, title, date ) => {
+    PushNotification.localNotificationSchedule(
+      {
+        channelId: 'MOFE PUSH',
+        title: title,
+        message: "😗 Remember to do...",
+        date,
+        id,
+        soundName: 'alert',
+      }
+    )
+
+    console.log( 'Scheduled notification for:', date )
   }
 
-  cancelNotification( id ) {
+  const cancelNotification = ( id ) => {
     PushNotification.cancelLocalNotification( id )
+
+    console.log( 'Cancelled notification of id:', id )
   }
 
-  rescheduleNotification( id, title, date ) {
-    this.cancelNotification( id )
-    this.scheduleNotification( id, title, date )
+  const rescheduleNotification = ( id, title, date ) => {
+    cancelNotification( id )
+    scheduleNotification( id, title, date )
+
+    console.log( 'Rescheduled notification for:', date )
+  }
+
+  createNotificationChannel()
+
+  return {
+    scheduleNotification,
+    cancelNotification, 
+    rescheduleNotification
   }
 }
 
-export default new Notifications()
+export default Notifications()

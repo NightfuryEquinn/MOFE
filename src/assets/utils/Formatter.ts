@@ -82,8 +82,6 @@ export const convertDateTimeToDate = ( date: any, time: any ) => {
     convertToDate.setHours( hours )
     convertToDate.setMinutes( minutes )
 
-    console.log( convertToDate )
-
     return convertToDate
   }
 }
