@@ -2,7 +2,7 @@ import moment from "moment"
 import uuid from "react-native-uuid"
 
 import realmDb from "../RealmDB"
-import { convertDateTimeToDate, convertDateToDateFormat, formatDateToDisplay, formatTimeToDisplay, isDateBetween } from "../../assets/utils/Formatter"
+import { convertDateTimeToDate, convertDateTimeToMs, convertDateToDateFormat, formatDateToDisplay, formatTimeToDisplay, isDateBetween } from "../../assets/utils/Formatter"
 import Notifications from "../../Notifications"
 
 interface Note {
@@ -142,7 +142,7 @@ export const insertNote = ( title: string, description: string, startDate: strin
     Notifications.scheduleNotification( 
       _notificationId, 
       title,
-      convertDateTimeToDate( startDate, startTime ) 
+      convertDateTimeToMs( startDate, startTime ) 
     )
   } catch ( err ) {
     console.log( err )
@@ -167,7 +167,7 @@ export const updateNote = ( _noteId: string, _notificationId: string, title: str
     Notifications.rescheduleNotification( 
       _notificationId, 
       title,
-      convertDateTimeToDate( startDate, startTime ) 
+      convertDateTimeToMs( startDate, startTime ) 
     )
   } catch ( err ) {
     console.log( err )

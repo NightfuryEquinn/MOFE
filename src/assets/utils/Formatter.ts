@@ -86,6 +86,18 @@ export const convertDateTimeToDate = ( date: any, time: any ) => {
   }
 }
 
+export const convertDateTimeToMs = ( date: any, time: any ) => {
+  const [ years, months, days ] = date.split( ' ' ).map( ( str: string ) => parseInt( str ) )
+
+  const splitTime = time.match( /(\d+)H (\d+)M/ )
+  const hours = parseInt( splitTime[ 1 ], 10 )
+  const minutes = parseInt( splitTime[ 2 ], 10 )
+
+  const ms = new Date( years, months - 1, days, hours, minutes).getTime()
+
+  return ms
+}
+
 export const formatDateToDisplay = ( time: string ): string => {
   const [ years, months, days ] = time.split( ' ' ).map( str => parseInt( str ) )
   const convertToString = years + '-' + months + '-' + days

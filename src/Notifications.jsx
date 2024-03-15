@@ -2,13 +2,16 @@ import PushNotification from 'react-native-push-notification';
 
 const Notifications = () => {
   const createNotificationChannel = () => {
-    PushNotification.channelExists( 'MOFE PUSH', function ( exists ) {
+    PushNotification.channelExists( 'mofe-push-id', function ( exists ) {
       if( !exists ) {
         PushNotification.createChannel(
           {
-            channelId: 'MOFE PUSH',
+            channelId: 'mofe-push-id',
             channelName: 'MOFE Scheduled Notifications',
             channelDescription: 'Scheduled Notifications from MOFE',
+            soundName: 'alert.mp3',
+            importance: 4,
+            vibrate: true
           },
           ( created ) => {
             if( created ) {
@@ -23,18 +26,20 @@ const Notifications = () => {
   }
 
   const scheduleNotification = ( id, title, date ) => {
+    createNotificationChannel()
+
     PushNotification.localNotificationSchedule(
       {
-        channelId: 'MOFE PUSH',
-        title: title,
-        message: "😗 Remember to do...",
-        date,
         id,
-        soundName: 'alert',
+        title,
+        date: new Date( date ),
+        channelId: 'mofe-push-id',
+        message: "😗 Remember to do...",
+        allowWhileIdle: false
       }
     )
 
-    console.log( 'Scheduled notification for:', date )
+    console.log( 'Notification scheduled for:', date )
   }
 
   const cancelNotification = ( id ) => {
@@ -49,8 +54,6 @@ const Notifications = () => {
 
     console.log( 'Rescheduled notification for:', date )
   }
-
-  createNotificationChannel()
 
   return {
     scheduleNotification,
