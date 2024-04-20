@@ -35,7 +35,7 @@ const Notifications = () => {
         date: new Date( date ),
         channelId: 'mofe-push-id',
         message: "😗 Remember to do...",
-        allowWhileIdle: false
+        allowWhileIdle: true
       }
     )
 
