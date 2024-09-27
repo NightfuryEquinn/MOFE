@@ -8,7 +8,6 @@ First try on React Native I learnt from my internship placement. Thought of maki
 
 ### 🗃 Application Version:
 1️. Realm Database on Local <br />
-2. Firebase Scheduled Notification (WIP) <br />
-3️. Realm Database on Cloud (WIP) <br />
+2. Database on Cloud (WIP) <br />
 
 See here for [production releases](https://github.com/NightfuryEquinn/MOFE/releases/tag/Production)
