@@ -3,25 +3,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-enum StickerType {
-  normal,
-  bonus,
-  penalty
-}
+enum StickerType { normal, bonus, penalty }
 
 class MofeGameProvider with ChangeNotifier {
-  int _score = 0;
-  int _time = 60;
-  bool _isGameActive = false;
+  final Random _random = Random();
+
   Timer? _timer;
   Timer? _posTimer;
 
+  int _score = 0;
+  int _time = 60;
+  bool _isGameActive = false;
   double _xPos = 0.0;
   double _yPos = 0.0;
   int _combo = 0;
   StickerType _currentSticker = StickerType.normal;
-
-  final Random _random = Random();
 
   int get score => _score;
   int get time => _time;
@@ -81,8 +77,8 @@ class MofeGameProvider with ChangeNotifier {
   }
 
   void _randomizePosition(double maxWidth, double maxHeight) {
-    _xPos = _random.nextDouble() * (maxWidth * 0.7);
-    _yPos = _random.nextDouble() * (maxHeight * 0.7);
+    _xPos = _random.nextDouble() * (maxWidth - 75);
+    _yPos = _random.nextDouble() * (maxHeight - 75);
 
     int stickerChance = _random.nextInt(10);
     if (stickerChance < 6) {
@@ -118,6 +114,8 @@ class MofeGameProvider with ChangeNotifier {
     _time = 60;
     _xPos = 0.0;
     _yPos = 0.0;
+    notifyListeners();
+
     super.dispose();
   }
 }

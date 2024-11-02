@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mofe_app/providers/mofe_game_provider.dart';
 import 'package:mofe_app/theme/colours.dart';
@@ -10,7 +12,16 @@ class MofeGamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> imagePaths = [
+      "assets/butt_1.png",
+      "assets/butt_2.png"
+    ];
     final gameState = context.watch<MofeGameProvider>();
+
+    String randomizeImage() {
+      final random = Random();
+      return imagePaths[random.nextInt(imagePaths.length)];
+    }
 
     return Scaffold(
       backgroundColor: MofeColour.black,
@@ -60,20 +71,70 @@ class MofeGamePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20.0),
-
-                const SizedBox(height: 50.0),
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return Material(
+                        color: Colors.transparent,
+                        shape: BeveledRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          side: const BorderSide(
+                            color: MofeColour.grey,
+                            width: 1.0
+                          )
+                        ),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              left: gameState.xPos,
+                              top: gameState.yPos,
+                              child: GestureDetector(
+                                onTap: () => gameState.tap(
+                                  constraints.maxWidth,
+                                  constraints.maxHeight
+                                ),
+                                child: gameState.currentSticker == StickerType.bonus ? 
+                                  Image.asset(
+                                    "assets/dog.png",
+                                    width: 100.0,
+                                    height: 100.0,
+                                  )
+                                  : gameState.currentSticker == StickerType.penalty ? 
+                                  Image.asset(
+                                    "assets/cat.png",
+                                    width: 100.0,
+                                    height: 100.0,
+                                  ) 
+                                  :
+                                  Image.asset(
+                                    randomizeImage(),
+                                    width: 100.0,
+                                    height: 100.0,
+                                  ) 
+                              )
+                            )
+                          ]
+                        )
+                      );
+                    }
+                  )
+                ),
+                const SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ActionButton(
-                      label: "End", 
+                      label: "Reset", 
                       alternative: !gameState.isGameActive, 
-                      onTap: () {}
+                      onTap: gameState.resetGame
                     ),
                     ActionButton(
                       label: "Start", 
                       alternative: gameState.isGameActive, 
-                      onTap: () {}
+                      onTap: () => gameState.startGame(
+                        Random().nextDouble() * (350),
+                        Random().nextDouble() * (600)
+                      )
                     ),
                   ],
                 ),
