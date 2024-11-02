@@ -18,6 +18,7 @@ class MofeHomePage extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: Center(
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
@@ -30,12 +31,12 @@ class MofeHomePage extends StatelessWidget {
                   height: 50,
                   child: AnimatedTextKit(
                     animatedTexts: [
-                      TypewriterAnimatedText("For go of the past, let bygones be bygones...", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 16, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
-                      TypewriterAnimatedText("Others may speak of nonsense, but must you let your anger lost...", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 16, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
-                      TypewriterAnimatedText("Must you not argue with different ideas and opinions...", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 16, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
-                      TypewriterAnimatedText("Because you live for yourself, not for the sake of them...", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 16, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
-                      TypewriterAnimatedText("Be patient, be calm, be bold, be mine...", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 16, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
-                      TypewriterAnimatedText("-- Sashiky, 2024 --", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 16, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
+                      TypewriterAnimatedText("For go of the past, let bygones be bygones...", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 14, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
+                      TypewriterAnimatedText("Others may speak of nonsense, but must you let your anger lost...", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 14, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
+                      TypewriterAnimatedText("Must you not argue with different ideas and opinions...", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 14, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
+                      TypewriterAnimatedText("Because you live for yourself, not for the sake of them...", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 14, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
+                      TypewriterAnimatedText("Be patient, be calm, be bold, be mine...", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 14, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
+                      TypewriterAnimatedText("-- Sashiky, 2024 --", textAlign: TextAlign.center, speed: const Duration(milliseconds: 50), textStyle: MofeFonts.krub(fontSize: 14, fontWeight: FontWeight.normal, colour: MofeColour.grey)),
                     ],
                     repeatForever: true,
                     pause: const Duration(seconds: 2),

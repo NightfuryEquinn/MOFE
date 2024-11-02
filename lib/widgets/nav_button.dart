@@ -52,15 +52,17 @@ class _NavButtonState extends State<NavButton> with TickerProviderStateMixin {
       ],
       child: Material(
         color: Colors.transparent,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0))
+        shape: BeveledRectangleBorder(
+          borderRadius: BorderRadius.circular(25.0)
         ),
         child: InkWell(
           onTap: _handleTap,
           splashColor: MofeColour.overlayWhite,
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          customBorder: BeveledRectangleBorder(
+            borderRadius: BorderRadius.circular(25.0)
+          ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
             child: Text(
               widget.label,
               style: MofeFonts.chivo(
@@ -71,20 +73,19 @@ class _NavButtonState extends State<NavButton> with TickerProviderStateMixin {
             )
           )
         )
+      ).animate(
+        target: _isTapped ? 1 : 0
       )
-        .animate(
-          target: _isTapped ? 1 : 0
-        )
-        .scale(
-          end: const Offset(1.5, 1.5),
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.fastEaseInToSlowEaseOut
-        )
-        .fadeOut(
-          delay: const Duration(milliseconds: 250),
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.fastEaseInToSlowEaseOut
-        )
+      .scale(
+        end: const Offset(1.5, 1.5),
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.fastEaseInToSlowEaseOut
+      )
+      .fadeOut(
+        delay: const Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.fastEaseInToSlowEaseOut
+      )
     );
   }
 }
