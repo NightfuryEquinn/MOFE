@@ -72,7 +72,13 @@ class MofeLogPage extends StatelessWidget {
                       label: "Write New",
                       alternative: false, 
                       onTap: () {
-                        Navigator.pushNamed(context, "/manage");
+                        Navigator.pushNamed(
+                          context,
+                          "/manage",
+                          arguments: {
+                            "mode": "new"
+                          }
+                        );
                       }
                     ),
                   ]

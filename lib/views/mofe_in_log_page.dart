@@ -21,42 +21,44 @@ class MofeInLogPage extends StatelessWidget {
         top: true,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Text(
-                "${args['title']}",
-                style: MofeFonts.chivo(
-                  fontSize: 24, 
-                  fontWeight: FontWeight.w200, 
-                  colour: MofeColour.white
+          child: Center(
+            child: Column(
+              children: [
+                Text(
+                  "${args['title']}",
+                  style: MofeFonts.chivo(
+                    fontSize: 24, 
+                    fontWeight: FontWeight.w200, 
+                    colour: MofeColour.white
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20.0),
-              Expanded(
-                child: MasonryGridView.count(
-                  itemCount: 31,
-                  scrollDirection: Axis.horizontal,
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 24,
-                  crossAxisSpacing: 60,
-                  itemBuilder: (context, index) {
-                    return MofeInLogScroll(
-                      label: "30",
-                      color: MofeColour.overlayGrey, // if content, change colour
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context, 
-                          "/manage",
-                          arguments: {
-                            "mode": "edit"
-                          }
-                        );
-                      }
-                    );
-                  },
-                )
-              ),
-            ],
+                const SizedBox(height: 20.0),
+                Expanded(
+                  child: MasonryGridView.count(
+                    itemCount: 31,
+                    scrollDirection: Axis.horizontal,
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 24,
+                    crossAxisSpacing: 60,
+                    itemBuilder: (context, index) {
+                      return MofeInLogScroll(
+                        label: "30",
+                        color: MofeColour.overlayGrey, // if content, change colour
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context, 
+                            "/manage",
+                            arguments: {
+                              "mode": "edit"
+                            }
+                          );
+                        }
+                      );
+                    },
+                  )
+                ),
+              ],
+            )
           )
         )
       ).animate().fade()

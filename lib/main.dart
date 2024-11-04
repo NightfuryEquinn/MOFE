@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mofe_app/animations/fade_route.dart';
 import 'package:mofe_app/firebase_options.dart';
 import 'package:mofe_app/providers/mofe_game_provider.dart';
+import 'package:mofe_app/theme/colours.dart';
 import 'package:mofe_app/views/mofe_game_page.dart';
 import 'package:mofe_app/views/mofe_game_record_page.dart';
 import 'package:mofe_app/views/mofe_home_page.dart';
@@ -40,6 +41,12 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MofeGameProvider())
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          textSelectionTheme: const TextSelectionThemeData(
+            selectionColor: MofeColour.overlayWhite,
+            selectionHandleColor: MofeColour.white
+          )
+        ),
         debugShowCheckedModeBanner: false,
         initialRoute: "/",
         onGenerateRoute: (RouteSettings settings) {
@@ -72,7 +79,8 @@ class MainApp extends StatelessWidget {
               break;
 
             case "/manage":
-              page = const MofeManageLogPage();
+              final dynamic args = settings.arguments as Map<String, dynamic>;
+              page = MofeManageLogPage(args: args);
               break;
 
             default:
