@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mofe_app/providers/mofe_game_provider.dart';
 import 'package:mofe_app/theme/colours.dart';
 import 'package:mofe_app/theme/fonts.dart';
@@ -151,7 +152,7 @@ class MofeGamePage extends StatelessWidget {
             ) 
           )
         )
-      )
+      ).animate().fade()
     );
   }
 }

@@ -1,6 +1,7 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mofe_app/theme/colours.dart';
 import 'package:mofe_app/theme/fonts.dart';
 import 'package:mofe_app/widgets/nav_button.dart';
@@ -25,7 +26,7 @@ class MofeHomePage extends StatelessWidget {
                   "assets/mofe.png",
                   width: 300,
                   height: 300,
-                ),
+                ).animate().fade(),
                 SizedBox(
                   width: 300,
                   height: 50,
@@ -49,13 +50,27 @@ class MofeHomePage extends StatelessWidget {
                 const SizedBox(height: 20),
                 NavButton(label: "RECORD", delay: 500, onTap: () => Navigator.pushNamed(context, "/record")),
                 const SizedBox(height: 50),
-                Text(
-                  "Version: v1.0.0",
-                  style: MofeFonts.krub(
-                    fontSize: 10, 
-                    fontWeight: FontWeight.normal, 
-                    colour: MofeColour.grey
-                  ),
+                Animate(
+                  effects: const [
+                    SlideEffect(
+                      begin: Offset(-1, 0),
+                      duration: Duration(milliseconds: 1750),
+                      curve: Curves.fastEaseInToSlowEaseOut
+                    ),
+                    FadeEffect(
+                      duration: Duration(milliseconds: 1500),
+                      delay: Duration(milliseconds: 1250),
+                      curve: Curves.fastEaseInToSlowEaseOut
+                    ),
+                  ],
+                  child: Text(
+                    "Version: v1.0.0",
+                    style: MofeFonts.krub(
+                      fontSize: 10, 
+                      fontWeight: FontWeight.normal, 
+                      colour: MofeColour.grey
+                    ),
+                  )
                 )
               ],
             )

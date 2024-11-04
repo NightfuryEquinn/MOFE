@@ -6,6 +6,7 @@ import 'package:mofe_app/providers/mofe_game_provider.dart';
 import 'package:mofe_app/views/mofe_game_page.dart';
 import 'package:mofe_app/views/mofe_game_record_page.dart';
 import 'package:mofe_app/views/mofe_home_page.dart';
+import 'package:mofe_app/views/mofe_in_log_page.dart';
 import 'package:mofe_app/views/mofe_log_page.dart';
 import 'package:mofe_app/views/mofe_manage_log_page.dart';
 import 'package:mofe_app/views/mofe_splash_page.dart';
@@ -63,6 +64,11 @@ class MainApp extends StatelessWidget {
 
             case "/log":
               page = const MofeLogPage();
+              break;
+            
+            case "/in_log":
+              final dynamic args = settings.arguments as Map<String, dynamic>;
+              page = MofeInLogPage(args: args);
               break;
 
             case "/manage":

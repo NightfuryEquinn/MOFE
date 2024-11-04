@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mofe_app/theme/colours.dart';
 
 class MofeManageLogPage extends StatelessWidget {
@@ -6,9 +7,9 @@ class MofeManageLogPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: MofeColour.black,
-      body: SafeArea(
+      body: const SafeArea(
         top: true,
         child: Padding(
           padding: EdgeInsets.all(20.0),
@@ -18,7 +19,7 @@ class MofeManageLogPage extends StatelessWidget {
             ],
           )
         )
-      )
+      ).animate().fade()
     );
   }
 }
