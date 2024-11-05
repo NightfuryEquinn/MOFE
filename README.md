@@ -1,7 +1,8 @@
 # 📜 MOFE
 ## ⚙️ Platform Used: VS Code, Oppo A95 on Android 13 (API 33)
 
-This project is solely for the purpose of creating a Firebase application 
+This project is solely for the purpose of creating a Firebase application to explore new libraries and frameworks.
+This app is only for my significant other 💞
 
 <hr />
 
