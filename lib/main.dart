@@ -52,7 +52,7 @@ class MainApp extends StatelessWidget {
           )
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: "/",
+        initialRoute: "/splash",
         onGenerateRoute: (RouteSettings settings) {
           Widget page;
 
