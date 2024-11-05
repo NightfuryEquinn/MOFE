@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
+import 'package:mofe_app/firebase/firestore_model.dart';
+import 'package:mofe_app/providers/mofe_record_provider.dart';
 import 'package:mofe_app/theme/colours.dart';
 import 'package:mofe_app/theme/fonts.dart';
 import 'package:mofe_app/widgets/mofe_game_record_row.dart';
+import 'package:provider/provider.dart';
 
 class MofeGameRecordPage extends StatelessWidget {
   const MofeGameRecordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final recordState = Provider.of<MofeRecordProvider>(context);
+    final List<MofeWoof> records = recordState.records;
+
     return Scaffold(
       backgroundColor: MofeColour.black,
       body: SafeArea(
@@ -34,7 +40,10 @@ class MofeGameRecordPage extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     crossAxisCount: 1,
                     mainAxisSpacing: 10,
+                    itemCount: records.length,
                     itemBuilder: (context, index) {
+                      final record = records[index];
+
                       if (index == 0) {
                         return Column(
                           children: [
@@ -79,9 +88,9 @@ class MofeGameRecordPage extends StatelessWidget {
                         );
                       } else {
                         return MofeGameRecordRow(
-                          date: DateFormat("dd-MM-yy H:mm:ss").format(DateTime.now()),
-                          score: "20",
-                          combo: "8",
+                          date: DateFormat("dd-MM-yy H:mm:ss").format(record.completedDate.toDate()),
+                          score: record.score,
+                          combo: record.combo,
                         );
                       }
                     }

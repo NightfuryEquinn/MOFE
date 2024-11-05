@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
+import 'package:mofe_app/providers/mofe_log_provider.dart';
 import 'package:mofe_app/theme/colours.dart';
 import 'package:mofe_app/theme/fonts.dart';
 import 'package:mofe_app/widgets/action_button.dart';
 import 'package:mofe_app/widgets/mofe_textfield.dart';
+import 'package:provider/provider.dart';
 
 class MofeManageLogPage extends StatefulWidget {
   final Map<String, dynamic> args;
@@ -20,7 +23,7 @@ class MofeManageLogPage extends StatefulWidget {
 }
 
 class _MofeManageLogPageState extends State<MofeManageLogPage> {
-  DateTime? _selectedDate;
+  DateTime _selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -28,32 +31,6 @@ class _MofeManageLogPageState extends State<MofeManageLogPage> {
       initialDate: DateTime.now(),
       firstDate: DateTime(2000), 
       lastDate: DateTime(DateTime.now().year + 250),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData(
-            colorScheme: const ColorScheme.dark(
-              primary: MofeColour.white,
-              onPrimary: MofeColour.black,
-              onSurface: MofeColour.white,
-            ),
-            textTheme: TextTheme(
-              headlineMedium: MofeFonts.chivo(
-                fontSize: 24, 
-                fontWeight: FontWeight.w200, 
-                colour: MofeColour.white
-              ),
-              labelLarge: MofeFonts.krub(
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-                colour: MofeColour.white
-              )
-            ),
-            
-            dialogBackgroundColor: MofeColour.black,
-          ),
-          child: child!,
-        );
-      }
     );
 
     if (picked != null && picked != _selectedDate) {
@@ -65,7 +42,8 @@ class _MofeManageLogPageState extends State<MofeManageLogPage> {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController contentCtrl = TextEditingController();
+    final TextEditingController contentCtrl = TextEditingController(text: widget.args["content"] ?? "");
+    final logState = Provider.of<MofeLogProvider>(context);
 
     return Scaffold(
       backgroundColor: MofeColour.black,
@@ -86,11 +64,12 @@ class _MofeManageLogPageState extends State<MofeManageLogPage> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                ActionButton(
-                  label: DateFormat("dd MMMM yyyy").format(_selectedDate ?? DateTime.now()), 
-                  alternative: false,
-                  onTap: () => _selectDate(context)
-                ),
+                if (widget.args["mode"] == "new")
+                  ActionButton(
+                    label: DateFormat("dd MMMM yyyy").format(_selectedDate), 
+                    alternative: false,
+                    onTap: () => _selectDate(context)
+                  ),
                 const SizedBox(height: 20.0),
                 Expanded(
                   child: Container(
@@ -142,7 +121,101 @@ class _MofeManageLogPageState extends State<MofeManageLogPage> {
                         ActionButton(
                           label: "Save", 
                           alternative: false, 
-                          onTap: () {}
+                          onTap: () async {
+                            if (contentCtrl.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: MofeColour.white,
+                                  content: Text(
+                                    "Your content is empty!",
+                                    style: MofeFonts.krub(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.normal,
+                                      colour: MofeColour.black
+                                    ),
+                                  ),
+                                  duration: const Duration(seconds: 3)
+                                )
+                              );
+
+                              return;
+                            }
+
+                            if (widget.args["mode"] == "new") {
+                              bool created = await logState.createLog(contentCtrl.text, Timestamp.fromDate(_selectedDate));
+                              
+                              if (created) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: MofeColour.white,
+                                    content: Text(
+                                      "Log written and saved!",
+                                      style: MofeFonts.krub(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.normal,
+                                        colour: MofeColour.black
+                                      ),
+                                    ),
+                                    duration: const Duration(seconds: 3)
+                                  )
+                                );
+
+                                Navigator.pop(context);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: MofeColour.white,
+                                    content: Text(
+                                      "Failed to create log. Please try again!",
+                                      style: MofeFonts.krub(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.normal,
+                                        colour: MofeColour.black
+                                      ),
+                                    ),
+                                    duration: const Duration(seconds: 3)
+                                  )
+                                );
+                              }
+                            } else {
+                              bool updated = await logState.updateLog(widget.args["logId"], contentCtrl.text);
+
+                              if (updated) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: MofeColour.white,
+                                    content: Text(
+                                      "Log updated and saved!",
+                                      style: MofeFonts.krub(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.normal,
+                                        colour: MofeColour.black
+                                      ),
+                                    ),
+                                    duration: const Duration(seconds: 3)
+                                  )
+                                );
+
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: MofeColour.white,
+                                    content: Text(
+                                      "Failed to update log. Please try again!",
+                                      style: MofeFonts.krub(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.normal,
+                                        colour: MofeColour.black
+                                      ),
+                                    ),
+                                    duration: const Duration(seconds: 3)
+                                  )
+                                );
+                              }
+                            }
+                          }
                         ),
                       ],
                     )

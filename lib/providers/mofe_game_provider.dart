@@ -1,18 +1,21 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mofe_app/providers/mofe_record_provider.dart';
 
 enum StickerType { normal, bonus, penalty }
 
 class MofeGameProvider with ChangeNotifier {
+  final MofeRecordProvider _mofeRecordProvider = MofeRecordProvider();
   final Random _random = Random();
 
   Timer? _timer;
   Timer? _posTimer;
 
   int _score = 0;
-  int _time = 60;
+  int _time = 10;
   bool _isGameActive = false;
   double _xPos = 0.0;
   double _yPos = 0.0;
@@ -29,7 +32,7 @@ class MofeGameProvider with ChangeNotifier {
 
   void startGame(double maxWidth, double maxHeight) {
     _score = 0;
-    _time = 60;
+    _time = 10;
     _isGameActive = true;
     _randomizePosition(maxWidth, maxHeight);
     notifyListeners();
@@ -42,6 +45,7 @@ class MofeGameProvider with ChangeNotifier {
       } else {
         _isGameActive = false;
         _timer?.cancel();
+        _mofeRecordProvider.createGameRecord(score.toString(), combo.toString(), Timestamp.fromDate(DateTime.now()));
         notifyListeners();
       }
     });
@@ -98,7 +102,7 @@ class MofeGameProvider with ChangeNotifier {
     _isGameActive = false;
     _score = 0;
     _combo = 0;
-    _time = 60;
+    _time = 10;
     _xPos = 0.0;
     _yPos = 0.0;
     notifyListeners();
@@ -111,7 +115,7 @@ class MofeGameProvider with ChangeNotifier {
     _isGameActive = false;
     _score = 0;
     _combo = 0;
-    _time = 60;
+    _time = 10;
     _xPos = 0.0;
     _yPos = 0.0;
     notifyListeners();

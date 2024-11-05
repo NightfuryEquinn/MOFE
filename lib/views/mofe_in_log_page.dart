@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:mofe_app/firebase/firestore_model.dart';
 import 'package:mofe_app/theme/colours.dart';
 import 'package:mofe_app/theme/fonts.dart';
 import 'package:mofe_app/widgets/mofe_in_log_scroll.dart';
@@ -15,6 +16,8 @@ class MofeInLogPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<MofeLog> monthLogs = args["logs"] ?? [];
+
     return Scaffold(
       backgroundColor: MofeColour.black,
       body: SafeArea(
@@ -35,21 +38,26 @@ class MofeInLogPage extends StatelessWidget {
                 const SizedBox(height: 20.0),
                 Expanded(
                   child: MasonryGridView.count(
-                    itemCount: 31,
                     scrollDirection: Axis.horizontal,
                     crossAxisCount: 3,
                     mainAxisSpacing: 24,
                     crossAxisSpacing: 60,
+                    itemCount: monthLogs.length,
                     itemBuilder: (context, index) {
+                      final log = monthLogs[index];
+                      String logDate = log.writtenDate.toDate().day.toString();
+
                       return MofeInLogScroll(
-                        label: "30",
-                        color: MofeColour.overlayGrey, // if content, change colour
+                        label: logDate,
+                        color: MofeColour.blue,
                         onTap: () {
                           Navigator.pushNamed(
                             context, 
                             "/manage",
                             arguments: {
-                              "mode": "edit"
+                              "mode": "edit",
+                              "logId": log.logId,
+                              "content": log.content
                             }
                           );
                         }
