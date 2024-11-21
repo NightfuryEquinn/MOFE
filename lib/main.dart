@@ -5,6 +5,7 @@ import 'package:mofe_app/firebase_options.dart';
 import 'package:mofe_app/providers/mofe_game_provider.dart';
 import 'package:mofe_app/providers/mofe_log_provider.dart';
 import 'package:mofe_app/providers/mofe_record_provider.dart';
+import 'package:mofe_app/providers/mofe_tap_provider.dart';
 import 'package:mofe_app/theme/colours.dart';
 import 'package:mofe_app/views/mofe_game_page.dart';
 import 'package:mofe_app/views/mofe_game_record_page.dart';
@@ -13,6 +14,7 @@ import 'package:mofe_app/views/mofe_in_log_page.dart';
 import 'package:mofe_app/views/mofe_log_page.dart';
 import 'package:mofe_app/views/mofe_manage_log_page.dart';
 import 'package:mofe_app/views/mofe_splash_page.dart';
+import 'package:mofe_app/views/mofe_tap_page.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -40,6 +42,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => MofeTapProvider()),
         ChangeNotifierProvider(create: (_) => MofeGameProvider()),
         ChangeNotifierProvider(create: (_) => MofeLogProvider()),
         ChangeNotifierProvider(create: (_) => MofeRecordProvider())
@@ -67,6 +70,10 @@ class MainApp extends StatelessWidget {
             
             case "/game":
               page = const MofeGamePage();
+              break;
+
+            case "/tap":
+              page = const MofeTapPage();
               break;
 
             case "/record":

@@ -15,7 +15,7 @@ class MofeTextfield extends StatelessWidget {
     return TextFormField(
       controller: controller,
       maxLines: 24,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.multiline,
       style: MofeFonts.krub(
         fontSize: 14,
         fontWeight: FontWeight.normal,

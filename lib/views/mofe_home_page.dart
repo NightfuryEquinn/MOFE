@@ -24,8 +24,8 @@ class MofeHomePage extends StatelessWidget {
               children: [
                 Image.asset(
                   "assets/mofe.png",
-                  width: 300,
-                  height: 300,
+                  width: 225,
+                  height: 225,
                 ).animate().fade(),
                 SizedBox(
                   width: 300,
@@ -43,13 +43,15 @@ class MofeHomePage extends StatelessWidget {
                     pause: const Duration(seconds: 2),
                   )
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 35),
                 NavButton(label: "LOG", onTap: () => Navigator.pushNamed(context, "/log")),
                 const SizedBox(height: 20),
-                NavButton(label: "GAME", delay: 250, onTap: () => Navigator.pushNamed(context, "/game")),
+                NavButton(label: "TAP", delay: 250, onTap: () => Navigator.pushNamed(context, "/tap")),
                 const SizedBox(height: 20),
-                NavButton(label: "RECORD", delay: 500, onTap: () => Navigator.pushNamed(context, "/record")),
-                const SizedBox(height: 50),
+                NavButton(label: "GAME", delay: 500, onTap: () => Navigator.pushNamed(context, "/game")),
+                const SizedBox(height: 20),
+                NavButton(label: "RECORD", delay: 750, onTap: () => Navigator.pushNamed(context, "/record")),
+                const SizedBox(height: 35),
                 Animate(
                   effects: const [
                     SlideEffect(
@@ -64,7 +66,7 @@ class MofeHomePage extends StatelessWidget {
                     ),
                   ],
                   child: Text(
-                    "Version: v1.0.0",
+                    "Version: v2.1.0",
                     style: MofeFonts.krub(
                       fontSize: 10, 
                       fontWeight: FontWeight.normal, 
